@@ -2,18 +2,12 @@ services:
   - type: web
     name: magp-backend
     env: python
+    plan: free
     rootDir: backend
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
+    startCommand: "python seed.py && uvicorn main:app --host 0.0.0.0 --port $PORT"
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.12
       - key: ALLOWED_ORIGINS
         value: "*"
-      # SQLite database URL pointing to the persistent disk
-      - key: DATABASE_URL
-        value: "sqlite:///./data/magp.db"
-    disk:
-      name: data
-      mountPath: /opt/render/project/src/backend/data
-      sizeGB: 1
