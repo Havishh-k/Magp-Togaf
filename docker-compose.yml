@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  backend:
+    build: 
+      context: ./backend
+    container_name: maliba_backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    environment:
+      # Use the SQLite DB mapped to persistent volume
+      - DATABASE_URL=sqlite:////app/data/maliba.db
+      - ALLOWED_ORIGINS=http://localhost
+      - SECRET_KEY=demo_secret_key_change_in_production
+      # LLM inference might need optimization based on host
+      - OMP_NUM_THREADS=4
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: maliba_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+

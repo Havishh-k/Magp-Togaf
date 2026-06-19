@@ -1,0 +1,19 @@
+{
+  "dashboard": {
+    "title": "Tableau de Bord du Ministère",
+    "search": "Rechercher dans le registre...",
+    "status": "Statut",
+    "systemName": "Nom du Système",
+    "developer": "Développeur",
+    "riskLevel": "Niveau de Risque",
+    "submitted": "Soumis",
+    "action": "Action",
+    "viewDetails": "Voir Détails"
+  },
+  "nav": {
+    "dashboard": "Tableau de Bord",
+    "auditLog": "Journal d'Audit",
+    "logout": "Déconnexion",
+    "currentView": "VUE ACTUELLE :"
+  }
+}

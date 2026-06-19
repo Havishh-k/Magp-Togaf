@@ -1,0 +1,19 @@
+{
+  "dashboard": {
+    "title": "Ministry Oversight Dashboard",
+    "search": "Search registry...",
+    "status": "Status",
+    "systemName": "System Name",
+    "developer": "Developer",
+    "riskLevel": "Risk Level",
+    "submitted": "Submitted",
+    "action": "Action",
+    "viewDetails": "View Details"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "auditLog": "Audit Log",
+    "logout": "Logout",
+    "currentView": "CURRENT VIEW:"
+  }
+}
