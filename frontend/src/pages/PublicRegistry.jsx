@@ -222,7 +222,7 @@ export default function PublicRegistry() {
             <Button type="button" variant="outline" onClick={() => setReportingSystem(null)}>
               Cancel
             </Button>
-            <Button type="submit" form="report-form" className="bg-warning-600 hover:bg-warning-700 text-white">
+            <Button type="submit" form="report-form" className="bg-amber-600 hover:bg-amber-700 text-white">
               Submit Report
             </Button>
           </DialogFooter>
