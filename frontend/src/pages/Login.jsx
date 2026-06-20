@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Shield, AlertCircle } from 'lucide-react';
+import { Shield, AlertCircle, ArrowLeft } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,7 +31,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4 relative">
+      <Button 
+        variant="ghost" 
+        onClick={() => navigate('/')}
+        className="absolute top-4 left-4 sm:top-8 sm:left-8 text-muted-foreground hover:text-foreground"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to main page
+      </Button>
       <Card className="max-w-md w-full shadow-lg border-border">
         <CardHeader className="flex flex-col items-center space-y-2 text-center pb-6">
           <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-2">
