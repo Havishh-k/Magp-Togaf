@@ -39,7 +39,7 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
   const pathnames = location.pathname.split('/').filter(x => x);
 
   return (
-    <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 shadow-sm">
+    <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 shadow-sm">
       <div className="flex items-center gap-4">
         <button 
           onClick={() => setSidebarOpen(prev => !prev)}

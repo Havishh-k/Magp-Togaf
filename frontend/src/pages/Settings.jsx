@@ -169,13 +169,13 @@ export default function Settings() {
                   <div className="flex bg-slate-100 dark:bg-slate-800 rounded-md p-1 border border-slate-200 dark:border-slate-700">
                     <button
                       onClick={() => setTheme('light')}
-                      className={`px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${theme === 'light' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'}`}
+                      className={`px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${theme === 'light' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}
                     >
                       Light
                     </button>
                     <button
                       onClick={() => setTheme('dark')}
-                      className={`px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${theme === 'dark' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400'}`}
+                      className={`px-3 py-1.5 text-sm font-medium rounded-sm transition-colors ${theme === 'dark' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'}`}
                     >
                       Dark
                     </button>

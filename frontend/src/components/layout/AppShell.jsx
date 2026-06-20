@@ -15,7 +15,7 @@ export default function AppShell() {
   }, []);
 
   return (
-    <div className="min-h-screen flex bg-slate-50 text-slate-900 font-sans">
+    <div className="min-h-screen flex bg-background text-foreground font-sans">
       {/* Mobile Backdrop */}
       {sidebarOpen && (
         <div 

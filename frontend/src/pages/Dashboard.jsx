@@ -33,14 +33,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-bold text-slate-900">Vendor Dashboard</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Vendor Dashboard</h1>
         <Button asChild className="w-full sm:w-auto min-h-[44px]">
           <Link to="/submit">Submit New System</Link>
         </Button>
       </div>
 
       <Card className="overflow-hidden flex flex-col p-0">
-        <CardHeader className="bg-slate-50 border-b border-slate-100">
+        <CardHeader className="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-100 dark:border-slate-800">
           <CardTitle>My AI Systems</CardTitle>
           <CardDescription>Track the regulatory status of your submitted models.</CardDescription>
         </CardHeader>
@@ -54,11 +54,11 @@ export default function Dashboard() {
                 <Table>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="sticky top-0 bg-white z-10 w-[250px] whitespace-nowrap">{t('dashboard.systemName')}</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 w-[100px]">Version</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 w-[150px] whitespace-nowrap">{t('dashboard.riskLevel')}</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.status')}</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 text-right">{t('dashboard.action')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[250px] whitespace-nowrap">{t('dashboard.systemName')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[100px]">Version</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[150px] whitespace-nowrap">{t('dashboard.riskLevel')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[150px]">{t('dashboard.status')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 text-right">{t('dashboard.action')}</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -67,7 +67,7 @@ export default function Dashboard() {
                         <TableCell className="font-medium whitespace-nowrap">{sys.system_name}</TableCell>
                         <TableCell className="text-slate-500">{sys.system_version}</TableCell>
                         <TableCell>
-                          <span className="text-sm font-medium px-2 py-1 bg-slate-100 rounded-md text-slate-700 whitespace-nowrap">{sys.risk_classification}</span>
+                          <span className="text-sm font-medium px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-md text-slate-700 dark:text-slate-300 whitespace-nowrap">{sys.risk_classification}</span>
                         </TableCell>
                         <TableCell>
                           <StatusBadge status={sys.lifecycle_status} />
@@ -93,21 +93,21 @@ export default function Dashboard() {
               {/* Mobile Cards */}
               <div className="md:hidden flex flex-col gap-4 p-4">
                 {systems.map(sys => (
-                  <div key={sys.id} className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
+                  <div key={sys.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
                     <div className="flex justify-between items-start gap-2">
                       <div>
-                        <p className="font-bold text-slate-900 leading-tight">{sys.system_name}</p>
+                        <p className="font-bold text-slate-900 dark:text-white leading-tight">{sys.system_name}</p>
                         <p className="text-sm text-slate-500 mt-1">v{sys.system_version}</p>
                       </div>
                       <StatusBadge status={sys.lifecycle_status} />
                     </div>
                     <div className="flex items-center gap-2 mt-1">
                       <span className="text-xs font-semibold text-slate-500 uppercase">Risk Level:</span>
-                      <span className="text-xs font-bold px-2 py-0.5 bg-slate-100 rounded-md text-slate-700">{sys.risk_classification}</span>
+                      <span className="text-xs font-bold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md text-slate-700 dark:text-slate-300">{sys.risk_classification}</span>
                     </div>
                     <Link 
                       to={`/system/${sys.id}`} 
-                      className="mt-2 w-full flex items-center justify-center bg-slate-100 text-slate-900 hover:bg-slate-200 min-h-[44px] rounded-md font-medium text-sm transition-colors"
+                      className="mt-2 w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 min-h-[44px] rounded-md font-medium text-sm transition-colors"
                     >
                       {t('dashboard.viewDetails')}
                     </Link>

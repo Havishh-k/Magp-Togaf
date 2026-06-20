@@ -71,7 +71,7 @@ export default function MinistryDashboard() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <h1 className="text-2xl font-semibold text-slate-900">{t('dashboard.title')}</h1>
+        <h1 className="text-2xl font-semibold text-slate-900 dark:text-white">{t('dashboard.title')}</h1>
         <div className="flex items-center gap-4">
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
@@ -120,11 +120,11 @@ export default function MinistryDashboard() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="sticky top-0 bg-white z-10 w-[250px] whitespace-nowrap">{t('dashboard.systemName')}</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10 w-[100px]">Version</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10 w-[150px] whitespace-nowrap">{t('dashboard.riskLevel')}</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.status')}</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10 text-right">{t('dashboard.action')}</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[250px] whitespace-nowrap">{t('dashboard.systemName')}</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[100px]">Version</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[150px] whitespace-nowrap">{t('dashboard.riskLevel')}</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 w-[150px]">{t('dashboard.status')}</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 text-right">{t('dashboard.action')}</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -133,7 +133,7 @@ export default function MinistryDashboard() {
                           <TableCell className="font-medium whitespace-nowrap">{sys.system_name}</TableCell>
                           <TableCell className="text-slate-500">{sys.system_version}</TableCell>
                           <TableCell>
-                            <span className="text-sm font-medium px-2 py-1 bg-slate-100 rounded-md text-slate-700 whitespace-nowrap">{sys.risk_classification}</span>
+                            <span className="text-sm font-medium px-2 py-1 bg-slate-100 dark:bg-slate-800 rounded-md text-slate-700 dark:text-slate-300 whitespace-nowrap">{sys.risk_classification}</span>
                           </TableCell>
                           <TableCell>
                             <StatusBadge status={sys.lifecycle_status} />
@@ -159,21 +159,21 @@ export default function MinistryDashboard() {
                 {/* Mobile Cards */}
                 <div className="md:hidden flex flex-col gap-4 p-4">
                   {systems.map(sys => (
-                    <div key={sys.id} className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
+                    <div key={sys.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
                       <div className="flex justify-between items-start gap-2">
                         <div>
-                          <p className="font-bold text-slate-900 leading-tight">{sys.system_name}</p>
+                          <p className="font-bold text-slate-900 dark:text-white leading-tight">{sys.system_name}</p>
                           <p className="text-sm text-slate-500 mt-1">v{sys.system_version}</p>
                         </div>
                         <StatusBadge status={sys.lifecycle_status} />
                       </div>
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-xs font-semibold text-slate-500 uppercase">Risk Level:</span>
-                        <span className="text-xs font-bold px-2 py-0.5 bg-slate-100 rounded-md text-slate-700">{sys.risk_classification}</span>
+                        <span className="text-xs font-bold px-2 py-0.5 bg-slate-100 dark:bg-slate-800 rounded-md text-slate-700 dark:text-slate-300">{sys.risk_classification}</span>
                       </div>
                       <Link 
                         to={`/system/${sys.id}`} 
-                        className="mt-2 w-full flex items-center justify-center bg-slate-100 text-slate-900 hover:bg-slate-200 min-h-[44px] rounded-md font-medium text-sm transition-colors"
+                        className="mt-2 w-full flex items-center justify-center bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white hover:bg-slate-200 dark:hover:bg-slate-700 min-h-[44px] rounded-md font-medium text-sm transition-colors"
                       >
                         {t('dashboard.viewDetails')}
                       </Link>
@@ -197,10 +197,10 @@ export default function MinistryDashboard() {
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead className="sticky top-0 bg-white z-10">Organization</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10">Username</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10">Email</TableHead>
-                        <TableHead className="sticky top-0 bg-white z-10 text-right">Actions</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10">Organization</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10">Username</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10">Email</TableHead>
+                        <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -233,9 +233,9 @@ export default function MinistryDashboard() {
                 {/* Mobile Cards */}
                 <div className="md:hidden flex flex-col gap-4 p-4">
                   {vendors.map(v => (
-                    <div key={v.id} className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
+                    <div key={v.id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
                       <div>
-                        <p className="font-semibold text-slate-900">{v.organization || 'N/A'}</p>
+                        <p className="font-semibold text-slate-900 dark:text-white">{v.organization || 'N/A'}</p>
                         <p className="text-sm text-slate-500">{v.username} • {v.email}</p>
                       </div>
                       <div className="flex flex-col gap-2 mt-2">
