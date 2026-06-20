@@ -35,22 +35,7 @@ export default function MinistryDashboard() {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold text-slate-900">{t('dashboard.title')}</h1>
         <div className="flex items-center gap-4">
-          <div className="flex bg-slate-100 rounded-md p-1 border border-slate-200">
-            <button 
-              onClick={() => setDensity('comfortable')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'comfortable' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-              title="Comfortable Density"
-            >
-              <AlignJustify className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={() => setDensity('compact')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'compact' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
-              title="Compact Density"
-            >
-              <List className="w-4 h-4" />
-            </button>
-          </div>
+
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
             <Input 
