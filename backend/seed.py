@@ -7,11 +7,16 @@ from models.legal_document import LegalDocument
 from services.auth_service import get_password_hash
 from services.audit_service import append_audit_entry
 
-# Reset DB
-Base.metadata.drop_all(bind=engine)
+# Do NOT drop tables automatically. Create them if they don't exist.
 Base.metadata.create_all(bind=engine)
 
 db = SessionLocal()
+
+# Check if already seeded
+if db.query(User).filter_by(username="admin").first():
+    print("Database is already seeded. Skipping...")
+    db.close()
+    exit(0)
 
 # Seed Users
 admin = User(
