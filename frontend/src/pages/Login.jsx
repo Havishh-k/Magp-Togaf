@@ -19,7 +19,9 @@ export default function Login() {
     setLoading(true);
     try {
       await login(username, password);
-      navigate('/dashboard');
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTo = urlParams.get('redirectTo');
+      navigate(redirectTo || '/dashboard');
     } catch {
       setError('Invalid credentials');
     } finally {

@@ -7,6 +7,7 @@ import VendorSubmission from './pages/VendorSubmission';
 import SystemDetail from './pages/SystemDetail';
 import AuditLog from './pages/AuditLog';
 import Notifications from './pages/Notifications';
+import LandingPage from './pages/LandingPage';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -19,14 +20,15 @@ function AppRoutes() {
   
   return (
     <Routes>
+      <Route path="/" element={user ? <Navigate to="/dashboard" /> : <LandingPage />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
-      <Route path="/" element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
-        <Route index element={<Navigate to="/dashboard" />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="submit" element={<VendorSubmission />} />
-        <Route path="system/:id" element={<SystemDetail />} />
-        <Route path="audit" element={<AuditLog />} />
-        <Route path="notifications" element={<Notifications />} />
+      
+      <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/submit" element={<VendorSubmission />} />
+        <Route path="/system/:id" element={<SystemDetail />} />
+        <Route path="/audit" element={<AuditLog />} />
+        <Route path="/notifications" element={<Notifications />} />
       </Route>
     </Routes>
   );
