@@ -3,6 +3,9 @@ import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import { ShieldCheck, ShieldAlert, Key, AlignJustify, List } from 'lucide-react';
 import SkeletonLoader from '../components/SkeletonLoader';
+import { Button } from '../components/ui/button';
+import { Card, CardContent } from '../components/ui/card';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../components/ui/table';
 
 export default function AuditLogViewer() {
   const [logs, setLogs] = useState([]);
@@ -61,15 +64,15 @@ export default function AuditLogViewer() {
   };
 
   if (user?.role !== 'ministry') {
-    return <div className="p-8 text-center">Unauthorized. Ministry access only.</div>;
+    return <div className="p-8 text-center font-medium">Unauthorized. Ministry access only.</div>;
   }
 
   const getRowClass = (log) => {
     const isExpanded = expandedRow === log.id;
-    let baseClass = isExpanded ? "bg-neutral-100 shadow-inner" : "hover:bg-neutral-50 cursor-pointer";
+    let baseClass = isExpanded ? "bg-slate-100 shadow-inner" : "cursor-pointer";
     if (verifyStatus !== 'invalid' || !tamperedSeq) return baseClass;
-    if (log.sequence_number === tamperedSeq) return baseClass + " bg-danger-100 border-l-4 border-danger-600";
-    if (log.sequence_number > tamperedSeq) return baseClass + " bg-amber-50 border-l-4 border-amber-500";
+    if (log.sequence_number === tamperedSeq) return baseClass + " bg-destructive/10 border-l-4 border-destructive hover:bg-destructive/10";
+    if (log.sequence_number > tamperedSeq) return baseClass + " bg-warning/10 border-l-4 border-warning-500 hover:bg-warning/10";
     return baseClass;
   };
 
@@ -77,47 +80,44 @@ export default function AuditLogViewer() {
     setExpandedRow(prev => prev === id ? null : id);
   };
 
-  const tdClass = density === 'compact' ? 'px-4 py-2' : 'px-6 py-4';
-  const thClass = density === 'compact' ? 'px-4 py-2 text-xs font-semibold text-neutral-600 uppercase sticky top-0 bg-neutral-50 shadow-sm z-10' : 'px-6 py-3 text-xs font-semibold text-neutral-600 uppercase sticky top-0 bg-neutral-50 shadow-sm z-10';
-
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold text-neutral-900">Cryptographic Audit Log</h1>
-          <p className="text-sm text-neutral-500">Immutable hash-chain ledger of all system events. Click a row to view details.</p>
+          <h1 className="text-2xl font-bold text-slate-900">Cryptographic Audit Log</h1>
+          <p className="text-sm text-slate-500">Immutable hash-chain ledger of all system events. Click a row to view details.</p>
         </div>
         
         <div className="flex items-center gap-4">
-          <div className="flex bg-neutral-100 rounded-lg p-1 border border-neutral-200">
+          <div className="flex bg-slate-100 rounded-md p-1 border border-slate-200">
             <button 
               onClick={() => setDensity('comfortable')}
-              className={`p-1.5 rounded-md transition-colors ${density === 'comfortable' ? 'bg-white shadow-sm text-primary-700' : 'text-neutral-500 hover:text-neutral-700'}`}
+              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'comfortable' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
               title="Comfortable Density"
             >
               <AlignJustify className="w-4 h-4" />
             </button>
             <button 
               onClick={() => setDensity('compact')}
-              className={`p-1.5 rounded-md transition-colors ${density === 'compact' ? 'bg-white shadow-sm text-primary-700' : 'text-neutral-500 hover:text-neutral-700'}`}
+              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'compact' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
               title="Compact Density"
             >
               <List className="w-4 h-4" />
             </button>
           </div>
-          <button 
+          <Button 
             onClick={verifyChain}
             disabled={verifyStatus === 'checking'}
-            className="flex items-center gap-2 bg-neutral-900 hover:bg-neutral-800 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+            className="gap-2"
           >
             <Key className="w-4 h-4" />
             {verifyStatus === 'checking' ? 'Verifying...' : 'Verify Chain Integrity'}
-          </button>
+          </Button>
         </div>
       </div>
 
       {verifyStatus === 'valid' && (
-        <div className="bg-emerald-50 border border-emerald-200 text-emerald-800 p-4 rounded-lg flex items-center gap-3">
+        <div className="bg-success/10 border border-success/20 text-success-800 p-4 rounded-md flex items-center gap-3">
           <ShieldCheck className="w-5 h-5" />
           <div>
             <p className="font-bold">Chain Integrity Verified</p>
@@ -127,8 +127,8 @@ export default function AuditLogViewer() {
       )}
 
       {verifyStatus === 'invalid' && (
-        <div className="bg-danger-50 border border-danger-200 text-danger-800 p-4 rounded-lg flex items-center gap-3 animate-pulse">
-          <ShieldAlert className="w-8 h-8 text-danger-600" />
+        <div className="bg-destructive/10 border border-destructive/20 text-destructive p-4 rounded-md flex items-center gap-3 animate-pulse">
+          <ShieldAlert className="w-8 h-8 text-destructive" />
           <div>
             <p className="font-bold text-lg">CRITICAL ALERT: Integrity Violation Detected</p>
             <p className="text-sm font-medium">The cryptographic chain is broken. This indicates data tampering starting at sequence #{tamperedSeq}.</p>
@@ -136,61 +136,63 @@ export default function AuditLogViewer() {
         </div>
       )}
 
-      <div className="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden flex flex-col max-h-[600px]">
-        {loading ? (
-          <SkeletonLoader rows={10} />
-        ) : (
-          <div className="overflow-auto flex-1 relative">
-            <table className="w-full text-left border-collapse whitespace-nowrap">
-              <thead>
-                <tr>
-                  <th className={thClass}>Seq</th>
-                  <th className={thClass}>Timestamp</th>
-                  <th className={thClass}>Event</th>
-                  <th className={thClass}>System ID</th>
-                  <th className={thClass}>Actor</th>
-                  <th className={thClass}>Hash Fragment</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-neutral-200">
+      <Card className="overflow-hidden flex flex-col max-h-[600px] p-0">
+        <CardContent className="p-0 flex-1 overflow-auto">
+          {loading ? (
+            <SkeletonLoader rows={10} />
+          ) : (
+            <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="sticky top-0 bg-white z-10">Seq</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10">Timestamp</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10">Event</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10">System ID</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10">Actor</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10">Hash Fragment</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
                 {logs.map(log => (
                   <React.Fragment key={log.id}>
-                    <tr onClick={() => toggleRow(log.id)} className={`font-mono text-sm transition-colors ${getRowClass(log)}`}>
-                      <td className={`${tdClass} text-neutral-500`}>#{log.sequence_number}</td>
-                      <td className={`${tdClass} text-neutral-600`}>{new Date(log.timestamp).toLocaleString()}</td>
-                      <td className={`${tdClass} font-bold text-neutral-900`}>{log.event_type}</td>
-                      <td className={`${tdClass} text-neutral-600`}>{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</td>
-                      <td className={`${tdClass} text-neutral-600`}>{log.actor_type}</td>
-                      <td className={`${tdClass} text-neutral-400`}>
+                    <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)}`}>
+                      <TableCell className="text-slate-500">#{log.sequence_number}</TableCell>
+                      <TableCell className="text-slate-600">{new Date(log.timestamp).toLocaleString()}</TableCell>
+                      <TableCell className="font-bold text-slate-900">{log.event_type}</TableCell>
+                      <TableCell className="text-slate-600">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
+                      <TableCell className="text-slate-600">{log.actor_type}</TableCell>
+                      <TableCell className="text-slate-400">
                         {log.entry_hash ? log.entry_hash.substring(0, 16) + '...' : 'N/A'}
-                      </td>
-                    </tr>
+                      </TableCell>
+                    </TableRow>
                     {expandedRow === log.id && (
-                      <tr className="bg-neutral-50 border-b border-neutral-200">
-                        <td colSpan="6" className="px-6 py-4">
-                          <div className="bg-white border border-neutral-200 rounded-lg p-4 font-sans shadow-sm">
-                            <h4 className="text-xs font-bold text-neutral-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              {Object.entries(log.event_data || {}).map(([key, value]) => (
-                                <div key={key} className="flex flex-col">
-                                  <span className="text-xs text-neutral-500 capitalize">{key.replace(/_/g, ' ')}</span>
-                                  <span className="text-sm font-medium text-neutral-900 truncate" title={String(value)}>
-                                    {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                                  </span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
+                      <TableRow className="bg-slate-50 hover:bg-slate-50">
+                        <TableCell colSpan={6} className="p-4">
+                          <Card className="shadow-sm">
+                            <CardContent className="p-4 font-sans">
+                              <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                {Object.entries(log.event_data || {}).map(([key, value]) => (
+                                  <div key={key} className="flex flex-col">
+                                    <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
+                                    <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
+                                      {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                            </CardContent>
+                          </Card>
+                        </TableCell>
+                      </TableRow>
                     )}
                   </React.Fragment>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

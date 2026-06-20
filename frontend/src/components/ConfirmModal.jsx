@@ -1,55 +1,82 @@
+import React, { useState } from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from './ui/dialog';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
+
 export default function ConfirmModal({ isOpen, title, requireReason, onConfirm, onCancel }) {
-  if (!isOpen) return null;
+  const [reason, setReason] = useState('');
+  const [confirmWord, setConfirmWord] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const reason = e.target.reason?.value || '';
+    if (confirmWord !== 'CONFIRM') return;
     onConfirm(reason);
+    setReason('');
+    setConfirmWord('');
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden">
-        <div className="p-6">
-          <h2 className="text-xl font-bold text-neutral-900 mb-2">{title}</h2>
-          <p className="text-sm text-neutral-600 mb-6">
+    <Dialog open={isOpen} onOpenChange={(open) => !open && onCancel()}>
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>
             Are you sure you want to proceed? This action will be logged in the immutable audit chain.
-          </p>
+            Please type <strong>CONFIRM</strong> to proceed.
+          </DialogDescription>
+        </DialogHeader>
 
-          <form onSubmit={handleSubmit} id="confirm-form">
-            {requireReason && (
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-neutral-700 mb-1">
-                  Reason <span className="text-danger-600">*</span>
-                </label>
-                <textarea
-                  name="reason"
-                  required
-                  rows="3"
-                  className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-danger-500 outline-none resize-none"
-                  placeholder="Provide justification..."
-                />
-              </div>
-            )}
-          </form>
-        </div>
-        <div className="bg-neutral-50 px-6 py-4 flex justify-end gap-3 border-t border-neutral-200">
-          <button
-            type="button"
-            onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-200 rounded-lg transition-colors"
-          >
+        <form onSubmit={handleSubmit} id="confirm-form" className="space-y-4 py-4">
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-slate-700">
+              Type CONFIRM <span className="text-destructive">*</span>
+            </label>
+            <Input
+              required
+              value={confirmWord}
+              onChange={(e) => setConfirmWord(e.target.value)}
+              placeholder="CONFIRM"
+              className="w-full"
+            />
+          </div>
+
+          {requireReason && (
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-slate-700">
+                Reason <span className="text-destructive">*</span>
+              </label>
+              <Input
+                required
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Provide justification..."
+                className="w-full"
+              />
+            </div>
+          )}
+        </form>
+
+        <DialogFooter className="sm:justify-end">
+          <Button type="button" variant="outline" onClick={onCancel}>
             Cancel
-          </button>
-          <button
-            type="submit"
-            form="confirm-form"
-            className="px-4 py-2 text-sm font-medium text-white bg-danger-600 hover:bg-danger-700 rounded-lg transition-colors"
+          </Button>
+          <Button 
+            type="submit" 
+            form="confirm-form" 
+            variant="destructive"
+            disabled={confirmWord !== 'CONFIRM'}
           >
             Confirm
-          </button>
-        </div>
-      </div>
-    </div>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
