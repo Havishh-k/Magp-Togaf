@@ -6,12 +6,6 @@ from routers.auth import get_current_user
 from schemas.registry import RegistryItem, SuspendRequest
 from services.registry_service import get_systems, get_system, promote_system, suspend_system, reactivate_system, fast_forward_system
 
-@router.post("/{system_id}/fast-forward", response_model=RegistryItem)
-def api_fast_forward(system_id: str, db: Session = Depends(get_db), admin: User = Depends(require_ministry)):
-    sys = fast_forward_system(db, system_id, admin.id)
-    if not sys:
-        raise HTTPException(status_code=404, detail="System not found")
-    return sys
 from models.user import User
 
 router = APIRouter(prefix="/registry", tags=["registry"])
@@ -60,6 +54,13 @@ def api_suspend(system_id: str, req: SuspendRequest, db: Session = Depends(get_d
 @router.post("/{system_id}/reactivate", response_model=RegistryItem)
 def api_reactivate(system_id: str, db: Session = Depends(get_db), admin: User = Depends(require_ministry)):
     sys = reactivate_system(db, system_id, admin.id)
+    if not sys:
+        raise HTTPException(status_code=404, detail="System not found")
+    return sys
+
+@router.post("/{system_id}/fast-forward", response_model=RegistryItem)
+def api_fast_forward(system_id: str, db: Session = Depends(get_db), admin: User = Depends(require_ministry)):
+    sys = fast_forward_system(db, system_id, admin.id)
     if not sys:
         raise HTTPException(status_code=404, detail="System not found")
     return sys
