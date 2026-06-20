@@ -32,11 +32,14 @@ function AppRoutes() {
   );
 }
 
+import { Toaster } from 'sonner';
+
 export default function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
+        <Toaster position="top-center" richColors />
       </AuthProvider>
     </BrowserRouter>
   );

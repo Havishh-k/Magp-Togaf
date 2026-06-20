@@ -6,6 +6,7 @@ import StatusBadge from '../components/StatusBadge';
 import ConfirmModal from '../components/ConfirmModal';
 import { ArrowLeft, Download } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
+import { toast } from 'sonner';
 
 import BiasReport from '../components/BiasReport';
 import ExplainabilityChart from '../components/ExplainabilityChart';
@@ -84,10 +85,11 @@ export default function SystemDetail() {
   const handleFastForward = async () => {
     try {
       await api.post(`/registry/${id}/fast-forward`);
+      toast.success('⏱️ Time Travel Simulated! Expiration date moved backward by 12 months.');
       fetchSystem();
     } catch (err) {
       console.error(err);
-      alert('Fast-forward failed');
+      toast.error('Fast-forward failed');
     }
   };
 
@@ -161,9 +163,14 @@ export default function SystemDetail() {
                 </ul>
               </div>
               {isExpired && (
-                <div className="bg-destructive/10 p-4 rounded-md border border-destructive/20 animate-pulse">
-                  <h3 className="text-sm font-bold text-destructive mb-1">⚠️ Suspension Warning: Registration Expired</h3>
-                  <p className="text-sm text-destructive font-medium">This model's registration timeline has elapsed. Data Drift may have occurred. Immediate review required.</p>
+                <div className="bg-destructive/10 p-5 rounded-lg border-2 border-destructive/30 animate-pulse print:animate-none">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">⚠️</span>
+                    <h3 className="text-base font-bold text-destructive uppercase tracking-wide">Suspension Warning: Registration Expired</h3>
+                  </div>
+                  <p className="text-sm text-destructive font-medium leading-relaxed">
+                    This AI model's registration timeline has completely elapsed. <strong>Data Drift</strong> may have occurred in the real world since it was last evaluated. Immediate human review and re-validation is required before it can be used again.
+                  </p>
                 </div>
               )}
               {sys.suspended_at && (
