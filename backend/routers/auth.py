@@ -3,8 +3,8 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db
 from models.user import User
-from services.auth_service import verify_password, get_user, create_access_token, create_user, ACCESS_TOKEN_EXPIRE_MINUTES
-from schemas.auth import Token, UserResponse, UserCreate
+from services.auth_service import verify_password, get_user, create_access_token, create_user, ACCESS_TOKEN_EXPIRE_MINUTES, update_user_profile, update_password
+from schemas.auth import Token, UserResponse, UserCreate, UserUpdate, PasswordUpdate
 from datetime import timedelta
 from jose import jwt, JWTError
 from services.auth_service import settings
@@ -67,6 +67,22 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 @router.get("/me", response_model=UserResponse)
 def read_users_me(current_user = Depends(get_current_user)):
     return current_user
+
+@router.patch("/me", response_model=UserResponse)
+def update_me(update_data: UserUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    try:
+        updated_user = update_user_profile(db, current_user.id, update_data)
+        return updated_user
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.patch("/me/password")
+def change_password(password_data: PasswordUpdate, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    try:
+        update_password(db, current_user.id, password_data)
+        return {"status": "success"}
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.get("/vendors/pending", response_model=List[UserResponse])
 def get_pending_vendors(db: Session = Depends(get_db), current_user: User = Depends(require_admin)):

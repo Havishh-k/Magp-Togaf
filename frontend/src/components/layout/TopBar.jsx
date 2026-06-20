@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useTranslation } from 'react-i18next';
-import { Menu, ChevronRight, Globe, Bell } from 'lucide-react';
+import { Menu, ChevronRight, Globe, Bell, User as UserIcon, Settings, LogOut } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import api from '../../api';
 
 export default function TopBar({ sidebarOpen, setSidebarOpen }) {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const location = useLocation();
   const { t, i18n } = useTranslation();
   const [unreadCount, setUnreadCount] = useState(0);
@@ -85,6 +86,37 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
               <span className="absolute top-1.5 right-2 w-2.5 h-2.5 bg-destructive rounded-full border-2 border-white"></span>
             )}
           </Link>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button className="flex items-center gap-2 p-1.5 pl-3 rounded-full hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border border-transparent">
+                <span className="text-sm font-medium text-slate-700 hidden sm:block">{user.username}</span>
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                  <UserIcon className="w-4 h-4" />
+                </div>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col space-y-1">
+                  <p className="text-sm font-medium leading-none">{user.username}</p>
+                  <p className="text-xs leading-none text-muted-foreground">{user.organization || user.role}</p>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link to="/settings" className="cursor-pointer flex w-full items-center">
+                  <Settings className="mr-2 h-4 w-4" />
+                  <span>Settings</span>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={logout} className="cursor-pointer text-destructive focus:text-destructive">
+                <LogOut className="mr-2 h-4 w-4" />
+                <span>Log out</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </header>

@@ -116,8 +116,8 @@ export default function SystemDetail() {
         </div>
       </div>
 
-      <Card ref={componentRef} className="print:shadow-none print:border-none">
-        <CardContent className="p-8 print:p-0">
+      <Card ref={componentRef} className="print:shadow-none print:border-none print:m-8">
+        <CardContent className="p-8">
           <div className="flex justify-between items-start mb-6 pb-6 border-b border-slate-200">
             <div>
               <h1 className="text-3xl font-bold text-slate-900">{sys.system_name}</h1>

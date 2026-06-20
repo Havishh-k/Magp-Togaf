@@ -4,7 +4,7 @@ from passlib.context import CryptContext
 from jose import jwt, JWTError
 from sqlalchemy.orm import Session
 from models.user import User
-from schemas.auth import UserCreate
+from schemas.auth import UserCreate, UserUpdate, PasswordUpdate
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
@@ -41,6 +41,36 @@ def create_user(db: Session, user: UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
+
+def update_user_profile(db: Session, user_id: str, update_data: UserUpdate):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        return None
+    
+    if update_data.email and update_data.email != user.email:
+        existing_email = db.query(User).filter(User.email == update_data.email).first()
+        if existing_email:
+            raise ValueError("Email already registered")
+        user.email = update_data.email
+        
+    if update_data.organization is not None:
+        user.organization = update_data.organization
+        
+    db.commit()
+    db.refresh(user)
+    return user
+
+def update_password(db: Session, user_id: str, password_data: PasswordUpdate):
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        return None
+        
+    if not verify_password(password_data.current_password, user.password_hash):
+        raise ValueError("Incorrect current password")
+        
+    user.password_hash = get_password_hash(password_data.new_password)
+    db.commit()
+    return user
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):
     to_encode = data.copy()

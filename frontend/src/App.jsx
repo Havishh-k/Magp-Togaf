@@ -9,6 +9,7 @@ import AuditLog from './pages/AuditLog';
 import Notifications from './pages/Notifications';
 import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
+import Settings from './pages/Settings';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -31,6 +32,7 @@ function AppRoutes() {
         <Route path="/system/:id" element={<SystemDetail />} />
         <Route path="/audit" element={<AuditLog />} />
         <Route path="/notifications" element={<Notifications />} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
     </Routes>
   );

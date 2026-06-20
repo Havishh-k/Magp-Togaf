@@ -1,4 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
+    organization: Optional[str] = None
+
+class PasswordUpdate(BaseModel):
+    current_password: str
+    new_password: str
 
 class Token(BaseModel):
     access_token: str
