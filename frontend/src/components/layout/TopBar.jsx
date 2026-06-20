@@ -48,21 +48,6 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
       </div>
       
       <div className="flex items-center gap-6">
-        {/* God Mode Pitch Switcher */}
-        <div className="flex items-center gap-2 bg-slate-100 px-3 py-1.5 rounded-md border border-slate-200 shadow-sm print:hidden">
-          <span className="text-xs font-semibold text-slate-700 tracking-wider uppercase">{t('nav.currentView')}</span>
-          <select 
-            className="bg-transparent text-xs font-semibold text-slate-900 focus:outline-none cursor-pointer uppercase focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-md"
-            value={user?.role}
-            onChange={(e) => {
-              if (e.target.value === 'ministry') login('admin', 'password123');
-              else if (e.target.value === 'vendor') login('vendor', 'password123');
-            }}
-          >
-            <option value="ministry">MINISTRY ADMIN</option>
-            <option value="vendor">SYSTEM VENDOR</option>
-          </select>
-        </div>
       
         <div className="flex items-center gap-4">
           <button 
