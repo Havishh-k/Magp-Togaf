@@ -15,3 +15,4 @@ aiofiles>=23.2.1
 python-dotenv>=1.0.1
 llama-cpp-python
 huggingface-hub
+email-validator
