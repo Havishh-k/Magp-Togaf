@@ -79,3 +79,10 @@
 table {
   @apply tabular-nums;
 }
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
