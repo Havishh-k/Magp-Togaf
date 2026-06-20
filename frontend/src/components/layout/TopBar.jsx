@@ -87,32 +87,52 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
             )}
           </Link>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-2 p-1.5 pl-3 rounded-full hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border border-transparent">
+          <div className="relative">
+            <button 
+              onClick={() => {
+                const el = document.getElementById('user-dropdown');
+                if (el) el.classList.toggle('hidden');
+              }}
+              onBlur={() => {
+                setTimeout(() => {
+                  const el = document.getElementById('user-dropdown');
+                  if (el) el.classList.add('hidden');
+                }, 200);
+              }}
+              className="flex items-center gap-2 p-1.5 pl-3 rounded-full hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border border-transparent"
+            >
               <span className="text-sm font-medium text-slate-700 hidden sm:block">{user.username}</span>
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary pointer-events-none">
                 <UserIcon className="w-4 h-4" />
               </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium leading-none">{user.username}</p>
-                  <p className="text-xs leading-none text-muted-foreground">{user.organization || user.role}</p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => window.location.href = '/settings'} className="cursor-pointer flex w-full items-center">
-                <Settings className="mr-2 h-4 w-4" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={logout} className="cursor-pointer text-destructive focus:text-destructive">
-                <LogOut className="mr-2 h-4 w-4" />
-                <span>Log out</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </button>
+            
+            <div 
+              id="user-dropdown" 
+              className="hidden absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-lg z-50 py-1"
+            >
+              <div className="px-4 py-3 border-b border-slate-200 dark:border-slate-800">
+                <p className="text-sm font-medium text-slate-900 dark:text-white truncate">{user.username}</p>
+                <p className="text-xs text-slate-500 truncate mt-0.5">{user.organization || user.role}</p>
+              </div>
+              <div className="p-1">
+                <Link 
+                  to="/settings" 
+                  className="flex w-full items-center px-3 py-2 text-sm text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-md transition-colors"
+                >
+                  <Settings className="mr-2 h-4 w-4" />
+                  Settings
+                </Link>
+                <button 
+                  onClick={logout} 
+                  className="flex w-full items-center px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-md transition-colors mt-1"
+                >
+                  <LogOut className="mr-2 h-4 w-4" />
+                  Log out
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
