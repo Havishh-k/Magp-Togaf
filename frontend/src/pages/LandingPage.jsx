@@ -18,7 +18,7 @@ export default function LandingPage() {
       {/* Global Header */}
       <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 lg:px-8 shadow-sm">
         <div className="flex items-center gap-2">
-          <Shield className="w-6 h-6 text-primary-600 shrink-0" />
+          <img src="/favicon.svg" alt="Maliba Logo" className="w-6 h-6 shrink-0" />
           <span className="font-bold tracking-tight text-slate-900 text-lg">Maliba AI</span>
         </div>
         <button 

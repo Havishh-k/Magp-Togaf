@@ -34,12 +34,12 @@ export default function Layout() {
         <div className="h-16 flex items-center justify-between px-4 border-b border-primary-800">
           {sidebarOpen && (
             <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in">
-              <Shield className="w-6 h-6 text-primary-400 shrink-0" />
+              <img src="/favicon.svg" alt="Maliba Logo" className="w-6 h-6 shrink-0" />
               <span className="font-bold tracking-tight text-white">Maliba AI</span>
             </div>
           )}
           {!sidebarOpen && (
-            <Shield className="w-6 h-6 text-primary-400 mx-auto shrink-0" />
+            <img src="/favicon.svg" alt="Maliba Logo" className="w-6 h-6 mx-auto shrink-0" />
           )}
         </div>
         
