@@ -3,6 +3,7 @@ import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
 import { LogOut, Shield, Bell, Menu, X, LayoutDashboard, FileText, ChevronRight, Globe } from 'lucide-react';
+import Sidebar from './layout/Sidebar';
 
 export default function Layout() {
   const { user, logout, login } = useAuth();
@@ -30,63 +31,7 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex bg-neutral-50 text-neutral-900 font-sans">
       {/* Sidebar */}
-      <aside className={`bg-primary-900 text-white flex flex-col transition-all duration-300 ${sidebarOpen ? 'w-64' : 'w-20'} fixed inset-y-0 z-20`}>
-        <div className="h-16 flex items-center justify-between px-4 border-b border-primary-800">
-          {sidebarOpen && (
-            <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in">
-              <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 shrink-0" />
-              <span className="font-bold tracking-tight text-white">Equalyze AI</span>
-            </div>
-          )}
-          {!sidebarOpen && (
-            <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 mx-auto shrink-0" />
-          )}
-        </div>
-        
-        <nav className="flex-1 py-6 px-3 space-y-2 overflow-y-auto">
-          <Link 
-            to="/dashboard" 
-            className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.pathname === '/dashboard' ? 'bg-primary-800 text-white' : 'text-primary-100 hover:bg-primary-800 hover:text-white'}`}
-            title={t('nav.dashboard')}
-          >
-            <LayoutDashboard className="w-5 h-5 shrink-0" />
-            {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.dashboard')}</span>}
-          </Link>
-          
-          {user.role === 'ministry' && (
-            <Link 
-              to="/audit" 
-              className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors ${location.pathname === '/audit' ? 'bg-primary-800 text-white' : 'text-primary-100 hover:bg-primary-800 hover:text-white'}`}
-              title={t('nav.auditLog')}
-            >
-              <FileText className="w-5 h-5 shrink-0" />
-              {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.auditLog')}</span>}
-            </Link>
-          )}
-        </nav>
-
-        <div className="p-4 border-t border-primary-800">
-          <div className={`flex items-center gap-3 mb-4 px-2 ${!sidebarOpen && 'justify-center'}`}>
-            <div className="w-8 h-8 rounded-full bg-primary-700 flex items-center justify-center text-primary-100 font-bold shrink-0">
-              {user.username.charAt(0).toUpperCase()}
-            </div>
-            {sidebarOpen && (
-              <div className="overflow-hidden">
-                <p className="text-sm font-medium text-white truncate">{user.username}</p>
-                <p className="text-xs text-primary-300 truncate capitalize">{user.role}</p>
-              </div>
-            )}
-          </div>
-          <button
-            onClick={handleLogout}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg bg-danger-600 hover:bg-danger-700 text-white transition-colors ${!sidebarOpen && 'justify-center'}`}
-            title={t('nav.logout')}
-          >
-            <LogOut className="w-5 h-5 shrink-0" />
-            {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.logout')}</span>}
-          </button>
-        </div>
-      </aside>
+      <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {/* Main Content Area */}
       <div className={`flex-1 flex flex-col transition-all duration-300 ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>

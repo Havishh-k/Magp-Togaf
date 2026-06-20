@@ -30,11 +30,11 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className="h-16 flex items-center justify-between px-4 border-b border-primary/20">
         {(sidebarOpen || window.innerWidth < 768) ? (
           <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in flex-1">
-            <Shield className="w-6 h-6 shrink-0" />
+            <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 shrink-0 rounded-sm" />
             <span className="font-bold tracking-tight">Equalyze AI</span>
           </div>
         ) : (
-          <Shield className="w-6 h-6 mx-auto shrink-0" />
+          <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 mx-auto shrink-0 rounded-sm" />
         )}
         {/* Mobile Close Button */}
         <button 
