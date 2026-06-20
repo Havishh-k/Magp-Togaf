@@ -21,7 +21,7 @@ function DropdownMenuPortal({
 const DropdownMenuTrigger = React.forwardRef(({
   ...props
 }, ref) => {
-  return <MenuPrimitive.Trigger ref={ref} data-slot="dropdown-menu-trigger" {...props} />;
+  return <MenuPrimitive.Trigger render={<button />} ref={ref} data-slot="dropdown-menu-trigger" {...props} />;
 });
 DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
@@ -42,6 +42,7 @@ const DropdownMenuContent = React.forwardRef(({
         side={side}
         sideOffset={sideOffset}>
         <MenuPrimitive.Popup
+          render={<div />}
           ref={ref}
           data-slot="dropdown-menu-content"
           className={cn(
@@ -68,6 +69,7 @@ const DropdownMenuLabel = React.forwardRef(({
 }, ref) => {
   return (
     <MenuPrimitive.GroupLabel
+      render={<div />}
       ref={ref}
       data-slot="dropdown-menu-label"
       data-inset={inset}
@@ -88,6 +90,7 @@ const DropdownMenuItem = React.forwardRef(({
 }, ref) => {
   return (
     <MenuPrimitive.Item
+      render={<div />}
       ref={ref}
       data-slot="dropdown-menu-item"
       data-inset={inset}
@@ -219,6 +222,7 @@ const DropdownMenuSeparator = React.forwardRef(({
 }, ref) => {
   return (
     <MenuPrimitive.Separator
+      render={<div />}
       ref={ref}
       data-slot="dropdown-menu-separator"
       className={cn("-mx-1 my-1 h-px bg-border", className)}
