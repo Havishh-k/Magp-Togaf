@@ -100,17 +100,17 @@ export default function SystemDetail() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div className="flex justify-between items-center print:hidden">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="gap-2 text-slate-600">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print:hidden">
+        <Button variant="ghost" onClick={() => navigate(-1)} className="gap-2 text-slate-600 -ml-2">
           <ArrowLeft className="w-4 h-4" /> Back
         </Button>
-        <div className="flex gap-2">
+        <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
           {user?.role === 'ministry' && (
-            <Button onClick={handleFastForward} variant="outline" className="gap-2 text-warning-700 bg-warning/10 hover:bg-warning/20 border-warning/20">
+            <Button onClick={handleFastForward} variant="outline" className="w-full sm:w-auto gap-2 text-warning-700 bg-warning/10 hover:bg-warning/20 border-warning/20">
               ⏩ Fast-Forward 12 Months
             </Button>
           )}
-          <Button onClick={() => handlePrint()} className="gap-2">
+          <Button onClick={() => handlePrint()} className="w-full sm:w-auto gap-2">
             <Download className="w-4 h-4" /> Download Model Card
           </Button>
         </div>

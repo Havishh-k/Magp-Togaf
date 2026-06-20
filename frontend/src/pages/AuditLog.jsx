@@ -141,56 +141,117 @@ export default function AuditLogViewer() {
           {loading ? (
             <SkeletonLoader rows={10} />
           ) : (
-            <div className="overflow-x-auto w-full border-0">
-              <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Seq</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Timestamp</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Event</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">System ID</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Actor</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Hash Fragment</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {logs.map(log => (
-                    <React.Fragment key={log.id}>
-                      <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)} min-h-[44px]`}>
-                        <TableCell className="text-slate-500 whitespace-nowrap">#{log.sequence_number}</TableCell>
-                        <TableCell className="text-slate-600 whitespace-nowrap">{new Date(log.timestamp).toLocaleString()}</TableCell>
-                        <TableCell className="font-bold text-slate-900 whitespace-nowrap">{log.event_type}</TableCell>
-                        <TableCell className="text-slate-600 whitespace-nowrap">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
-                        <TableCell className="text-slate-600 whitespace-nowrap">{log.actor_type}</TableCell>
-                        <TableCell className="text-slate-400 whitespace-nowrap">
-                          {log.entry_hash ? log.entry_hash.substring(0, 16) + '...' : 'N/A'}
-                        </TableCell>
-                      </TableRow>
-                      {expandedRow === log.id && (
-                        <TableRow className="bg-slate-50 hover:bg-slate-50">
-                          <TableCell colSpan={6} className="p-4">
-                            <Card className="shadow-sm">
-                              <CardContent className="p-4 font-sans">
-                                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-x-auto">
-                                  {Object.entries(log.event_data || {}).map(([key, value]) => (
-                                    <div key={key} className="flex flex-col">
-                                      <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
-                                      <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
-                                        {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                                      </span>
-                                    </div>
-                                  ))}
-                                </div>
-                              </CardContent>
-                            </Card>
+            <div className="w-full">
+              {/* Desktop Table */}
+              <div className="hidden md:block overflow-x-auto w-full border-0">
+                <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Seq</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Timestamp</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Event</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">System ID</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Actor</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Hash Fragment</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {logs.map(log => (
+                      <React.Fragment key={log.id}>
+                        <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)} min-h-[44px]`}>
+                          <TableCell className="text-slate-500 whitespace-nowrap">#{log.sequence_number}</TableCell>
+                          <TableCell className="text-slate-600 whitespace-nowrap">{new Date(log.timestamp).toLocaleString()}</TableCell>
+                          <TableCell className="font-bold text-slate-900 whitespace-nowrap">{log.event_type}</TableCell>
+                          <TableCell className="text-slate-600 whitespace-nowrap">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
+                          <TableCell className="text-slate-600 whitespace-nowrap">{log.actor_type}</TableCell>
+                          <TableCell className="text-slate-400 whitespace-nowrap">
+                            {log.entry_hash ? log.entry_hash.substring(0, 16) + '...' : 'N/A'}
                           </TableCell>
                         </TableRow>
+                        {expandedRow === log.id && (
+                          <TableRow className="bg-slate-50 hover:bg-slate-50">
+                            <TableCell colSpan={6} className="p-4">
+                              <Card className="shadow-sm">
+                                <CardContent className="p-4 font-sans">
+                                  <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
+                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-x-auto">
+                                    {Object.entries(log.event_data || {}).map(([key, value]) => (
+                                      <div key={key} className="flex flex-col">
+                                        <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
+                                        <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
+                                          {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </React.Fragment>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+
+              {/* Mobile Cards */}
+              <div className="md:hidden flex flex-col divide-y divide-slate-100">
+                {logs.map(log => {
+                  const isExpanded = expandedRow === log.id;
+                  let cardClass = "p-4 flex flex-col gap-2 transition-colors cursor-pointer ";
+                  if (verifyStatus === 'invalid' && tamperedSeq) {
+                    if (log.sequence_number === tamperedSeq) cardClass += "bg-destructive/10 border-l-4 border-destructive ";
+                    else if (log.sequence_number > tamperedSeq) cardClass += "bg-warning/10 border-l-4 border-warning-500 ";
+                    else cardClass += isExpanded ? "bg-slate-50 " : "bg-white hover:bg-slate-50 ";
+                  } else {
+                    cardClass += isExpanded ? "bg-slate-50 " : "bg-white hover:bg-slate-50 ";
+                  }
+
+                  return (
+                    <div key={log.id} className={cardClass} onClick={() => toggleRow(log.id)}>
+                      <div className="flex justify-between items-start gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-xs font-semibold text-slate-500">#{log.sequence_number}</span>
+                          <span className="font-bold text-slate-900 text-sm">{log.event_type}</span>
+                        </div>
+                        <span className="text-xs text-slate-500">{new Date(log.timestamp).toLocaleDateString()} {new Date(log.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                      </div>
+                      
+                      <div className="flex items-center gap-4 mt-1">
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">Actor</span>
+                          <span className="text-xs font-medium text-slate-700">{log.actor_type}</span>
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-wider">System ID</span>
+                          <span className="text-xs font-mono text-slate-600">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</span>
+                        </div>
+                      </div>
+
+                      {isExpanded && (
+                        <div className="mt-3 pt-3 border-t border-slate-200">
+                          <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
+                          <div className="grid grid-cols-1 gap-2 bg-white p-3 rounded-md border border-slate-200">
+                            {Object.entries(log.event_data || {}).map(([key, value]) => (
+                              <div key={key} className="flex flex-col">
+                                <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
+                                <span className="text-sm font-medium text-slate-900 break-words" title={String(value)}>
+                                  {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                                </span>
+                              </div>
+                            ))}
+                            <div className="flex flex-col mt-2 pt-2 border-t border-slate-100">
+                              <span className="text-xs text-slate-500">Hash Fragment</span>
+                              <span className="text-xs font-mono text-slate-400 break-all">{log.entry_hash}</span>
+                            </div>
+                          </div>
+                        </div>
                       )}
-                    </React.Fragment>
-                  ))}
-                </TableBody>
-              </Table>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           )}
         </CardContent>
