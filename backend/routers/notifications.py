@@ -13,6 +13,12 @@ router = APIRouter(prefix="/notifications", tags=["notifications"])
 def api_get_notifications(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     return get_notifications(db, current_user.id)
 
+@router.get("/unread-count")
+def api_get_unread_count(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
+    from services.notification_service import get_unread_count
+    count = get_unread_count(db, current_user.id)
+    return {"unread": count}
+
 @router.patch("/{notif_id}/read", response_model=NotificationResponse)
 def api_mark_read(notif_id: str, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     notif = mark_read(db, notif_id, current_user.id)

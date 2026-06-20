@@ -3,6 +3,7 @@ from models.ai_system import AISystem
 from models.user import User
 from datetime import datetime, UTC
 from services.audit_service import append_audit_entry
+from services.notification_service import create_notification
 
 def get_systems(db: Session, user: User):
     if user.role == "ministry":
@@ -40,6 +41,18 @@ def promote_system(db: Session, system_id: str, new_status: str, admin_id: str) 
         system_id=system_id,
         actor_id=admin_id
     )
+    
+    status_text = new_status.replace('_', ' ').title()
+    create_notification(
+        db=db,
+        recipient_id=sys.vendor_id,
+        notification_type="STATUS_UPDATE",
+        title=f"System {status_text}",
+        message=f"Your system '{sys.system_name}' is now {status_text}.",
+        system_id=sys.id,
+        recipient_role="vendor"
+    )
+    
     return sys
 
 def suspend_system(db: Session, system_id: str, reason: str, admin_id: str) -> AISystem:
@@ -61,6 +74,17 @@ def suspend_system(db: Session, system_id: str, reason: str, admin_id: str) -> A
         system_id=system_id,
         actor_id=admin_id
     )
+    
+    create_notification(
+        db=db,
+        recipient_id=sys.vendor_id,
+        notification_type="SYSTEM_SUSPENDED",
+        title="System Suspended",
+        message=f"Your system '{sys.system_name}' has been suspended. Reason: {reason}",
+        system_id=sys.id,
+        recipient_role="vendor"
+    )
+    
     return sys
 
 def reactivate_system(db: Session, system_id: str, admin_id: str) -> AISystem:
@@ -82,6 +106,17 @@ def reactivate_system(db: Session, system_id: str, admin_id: str) -> AISystem:
         system_id=system_id,
         actor_id=admin_id
     )
+    
+    create_notification(
+        db=db,
+        recipient_id=sys.vendor_id,
+        notification_type="SYSTEM_REACTIVATED",
+        title="System Reactivated",
+        message=f"Your system '{sys.system_name}' has been reactivated and is pending review.",
+        system_id=sys.id,
+        recipient_role="vendor"
+    )
+    
     return sys
 
 def fast_forward_system(db: Session, system_id: str, admin_id: str) -> AISystem:

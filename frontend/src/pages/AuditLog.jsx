@@ -82,13 +82,13 @@ export default function AuditLogViewer() {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Cryptographic Audit Log</h1>
           <p className="text-sm text-slate-500">Immutable hash-chain ledger of all system events. Click a row to view details.</p>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
           <div className="flex bg-slate-100 rounded-md p-1 border border-slate-200">
             <button 
               onClick={() => setDensity('comfortable')}
@@ -108,7 +108,7 @@ export default function AuditLogViewer() {
           <Button 
             onClick={verifyChain}
             disabled={verifyStatus === 'checking'}
-            className="gap-2"
+            className="gap-2 flex-1 md:flex-none min-h-[44px]"
           >
             <Key className="w-4 h-4" />
             {verifyStatus === 'checking' ? 'Verifying...' : 'Verify Chain Integrity'}

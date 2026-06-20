@@ -22,6 +22,9 @@ def create_notification(db: Session, recipient_id: str, notification_type: str, 
 def get_notifications(db: Session, user_id: str):
     return db.query(Notification).filter(Notification.recipient_id == user_id).order_by(Notification.created_at.desc()).all()
 
+def get_unread_count(db: Session, user_id: str) -> int:
+    return db.query(Notification).filter(Notification.recipient_id == user_id, Notification.is_read == False).count()
+
 def mark_read(db: Session, notif_id: str, user_id: str) -> Notification:
     notif = db.query(Notification).filter(Notification.id == notif_id, Notification.recipient_id == user_id).first()
     if not notif:

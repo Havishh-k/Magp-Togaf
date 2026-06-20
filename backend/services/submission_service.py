@@ -4,6 +4,8 @@ from models.ai_system import AISystem
 from schemas.submission import SubmissionDraftCreate
 from datetime import datetime, UTC
 from services.audit_service import append_audit_entry
+from models.user import User
+from services.notification_service import create_notification
 
 def create_draft(db: Session, vendor_id: str, data: SubmissionDraftCreate) -> AISystem:
     sub_id = f"SUB-{datetime.now(UTC).strftime('%Y%m%d%H%M%S')}"
@@ -57,5 +59,17 @@ def submit_for_review(db: Session, system_id: str, vendor_id: str) -> AISystem:
         system_id=sys.id,
         actor_id=vendor_id
     )
+    
+    ministry_users = db.query(User).filter(User.role == "ministry").all()
+    for m_user in ministry_users:
+        create_notification(
+            db=db,
+            recipient_id=m_user.id,
+            notification_type="SYSTEM_SUBMITTED",
+            title="New AI System Submitted",
+            message=f"System '{sys.system_name}' (v{sys.system_version}) has been submitted for regulatory review.",
+            system_id=sys.id,
+            recipient_role="ministry"
+        )
     
     return sys

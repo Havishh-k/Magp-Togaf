@@ -24,7 +24,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
   if (!user) return null;
 
   return (
-    <aside className={`bg-primary text-primary-foreground flex flex-col transition-all duration-300 fixed inset-y-0 z-50 
+    <aside className={`bg-primary text-primary-foreground flex flex-col transition-all duration-300 fixed inset-y-0 h-[100dvh] z-50 
       ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-20'}
     `}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-primary/20">
