@@ -88,13 +88,11 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
           </Link>
 
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-2 p-1.5 pl-3 rounded-full hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border border-transparent">
-                <span className="text-sm font-medium text-slate-700 hidden sm:block">{user.username}</span>
-                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                  <UserIcon className="w-4 h-4" />
-                </div>
-              </button>
+            <DropdownMenuTrigger className="flex items-center gap-2 p-1.5 pl-3 rounded-full hover:bg-slate-100 transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary border border-transparent">
+              <span className="text-sm font-medium text-slate-700 hidden sm:block">{user.username}</span>
+              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <UserIcon className="w-4 h-4" />
+              </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>
@@ -104,11 +102,9 @@ export default function TopBar({ sidebarOpen, setSidebarOpen }) {
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link to="/settings" className="cursor-pointer flex w-full items-center">
-                  <Settings className="mr-2 h-4 w-4" />
-                  <span>Settings</span>
-                </Link>
+              <DropdownMenuItem onClick={() => window.location.href = '/settings'} className="cursor-pointer flex w-full items-center">
+                <Settings className="mr-2 h-4 w-4" />
+                <span>Settings</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={logout} className="cursor-pointer text-destructive focus:text-destructive">
