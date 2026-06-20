@@ -18,20 +18,21 @@ function DropdownMenuPortal({
   return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
-function DropdownMenuTrigger({
+const DropdownMenuTrigger = React.forwardRef(({
   ...props
-}) {
-  return <MenuPrimitive.Trigger data-slot="dropdown-menu-trigger" {...props} />;
-}
+}, ref) => {
+  return <MenuPrimitive.Trigger ref={ref} data-slot="dropdown-menu-trigger" {...props} />;
+});
+DropdownMenuTrigger.displayName = "DropdownMenuTrigger";
 
-function DropdownMenuContent({
+const DropdownMenuContent = React.forwardRef(({
   align = "start",
   alignOffset = 0,
   side = "bottom",
   sideOffset = 4,
   className,
   ...props
-}) {
+}, ref) => {
   return (
     <MenuPrimitive.Portal>
       <MenuPrimitive.Positioner
@@ -41,6 +42,7 @@ function DropdownMenuContent({
         side={side}
         sideOffset={sideOffset}>
         <MenuPrimitive.Popup
+          ref={ref}
           data-slot="dropdown-menu-content"
           className={cn(
             "z-50 max-h-(--available-height) w-(--anchor-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 duration-100 outline-none data-[side=bottom]:slide-in-from-top-2 data-[side=inline-end]:slide-in-from-left-2 data-[side=inline-start]:slide-in-from-right-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:overflow-hidden data-closed:fade-out-0 data-closed:zoom-out-95",
@@ -50,7 +52,8 @@ function DropdownMenuContent({
       </MenuPrimitive.Positioner>
     </MenuPrimitive.Portal>
   );
-}
+});
+DropdownMenuContent.displayName = "DropdownMenuContent";
 
 function DropdownMenuGroup({
   ...props
@@ -58,13 +61,14 @@ function DropdownMenuGroup({
   return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
-function DropdownMenuLabel({
+const DropdownMenuLabel = React.forwardRef(({
   className,
   inset,
   ...props
-}) {
+}, ref) => {
   return (
     <MenuPrimitive.GroupLabel
+      ref={ref}
       data-slot="dropdown-menu-label"
       data-inset={inset}
       className={cn(
@@ -73,16 +77,18 @@ function DropdownMenuLabel({
       )}
       {...props} />
   );
-}
+});
+DropdownMenuLabel.displayName = "DropdownMenuLabel";
 
-function DropdownMenuItem({
+const DropdownMenuItem = React.forwardRef(({
   className,
   inset,
   variant = "default",
   ...props
-}) {
+}, ref) => {
   return (
     <MenuPrimitive.Item
+      ref={ref}
       data-slot="dropdown-menu-item"
       data-inset={inset}
       data-variant={variant}
@@ -92,7 +98,8 @@ function DropdownMenuItem({
       )}
       {...props} />
   );
-}
+});
+DropdownMenuItem.displayName = "DropdownMenuItem";
 
 function DropdownMenuSub({
   ...props
@@ -206,17 +213,19 @@ function DropdownMenuRadioItem({
   );
 }
 
-function DropdownMenuSeparator({
+const DropdownMenuSeparator = React.forwardRef(({
   className,
   ...props
-}) {
+}, ref) => {
   return (
     <MenuPrimitive.Separator
+      ref={ref}
       data-slot="dropdown-menu-separator"
       className={cn("-mx-1 my-1 h-px bg-border", className)}
       {...props} />
   );
-}
+});
+DropdownMenuSeparator.displayName = "DropdownMenuSeparator";
 
 function DropdownMenuShortcut({
   className,
