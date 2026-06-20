@@ -211,21 +211,21 @@ export default function SystemDetail() {
           )}
 
           {user?.role === 'ministry' && (
-            <div className="pt-6 border-t border-slate-200 flex gap-3 print:hidden">
+            <div className="pt-6 border-t border-slate-200 flex flex-wrap gap-3 print:hidden">
               {sys.lifecycle_status === 'PENDING_REVIEW' && (
                 <>
-                  <Button onClick={() => handleAction('APPROVE')} className="bg-success text-success-foreground hover:bg-success/90">Approve</Button>
-                  <Button onClick={() => handleAction('REJECT')} variant="destructive">Reject</Button>
+                  <Button onClick={() => handleAction('APPROVE')} className="bg-success text-success-foreground hover:bg-success/90 min-h-[44px]">Approve</Button>
+                  <Button onClick={() => handleAction('REJECT')} variant="destructive" className="min-h-[44px]">Reject</Button>
                 </>
               )}
               {sys.lifecycle_status === 'APPROVED' && (
-                <Button onClick={() => handleAction('SHADOW_MODE')} className="bg-primary text-primary-foreground hover:bg-primary/90">Promote to Shadow Mode</Button>
+                <Button onClick={() => handleAction('SHADOW_MODE')} className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-[44px]">Promote to Shadow Mode</Button>
               )}
               {sys.lifecycle_status !== 'SUSPENDED' && sys.lifecycle_status !== 'REJECTED' && (
-                <Button onClick={() => handleAction('SUSPEND')} variant="outline" className="ml-auto text-destructive border-destructive hover:bg-destructive/10">Suspend System</Button>
+                <Button onClick={() => handleAction('SUSPEND')} variant="outline" className="md:ml-auto text-destructive border-destructive hover:bg-destructive/10 min-h-[44px]">Suspend System</Button>
               )}
               {sys.lifecycle_status === 'SUSPENDED' && (
-                <Button onClick={() => handleAction('REACTIVATE')} variant="secondary">Reactivate</Button>
+                <Button onClick={() => handleAction('REACTIVATE')} variant="secondary" className="min-h-[44px]">Reactivate</Button>
               )}
             </div>
           )}

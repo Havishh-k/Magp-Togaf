@@ -114,82 +114,114 @@ export default function MinistryDashboard() {
             loading ? (
               <SkeletonLoader rows={5} />
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="sticky top-0 bg-white z-10 w-[250px]">{t('dashboard.systemName')}</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 w-[100px]">Version</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.riskLevel')}</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.status')}</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 text-right">{t('dashboard.action')}</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {systems.map(sys => (
-                    <TableRow key={sys.id}>
-                      <TableCell className="font-medium">{sys.system_name}</TableCell>
-                      <TableCell className="text-slate-500">{sys.system_version}</TableCell>
-                      <TableCell>
-                        <span className="text-sm font-medium px-2 py-1 bg-slate-100 rounded-md text-slate-700">{sys.risk_classification}</span>
-                      </TableCell>
-                      <TableCell>
-                        <StatusBadge status={sys.lifecycle_status} />
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Link to={`/system/${sys.id}`} className="text-primary font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-sm">
-                          {t('dashboard.viewDetails')}
-                        </Link>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {systems.length === 0 && (
+              <div className="overflow-x-auto border-0 w-full">
+                <Table>
+                  <TableHeader>
                     <TableRow>
-                      <TableCell colSpan={5} className="text-center text-slate-500 h-24">
-                        No systems registered yet.
-                      </TableCell>
+                      <TableHead className="sticky top-0 bg-white z-10 w-[250px] whitespace-nowrap">{t('dashboard.systemName')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 w-[100px]">Version</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 w-[150px] whitespace-nowrap">{t('dashboard.riskLevel')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.status')}</TableHead>
+                      <TableHead className="sticky top-0 bg-white z-10 text-right">{t('dashboard.action')}</TableHead>
                     </TableRow>
-                  )}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {systems.map(sys => (
+                      <TableRow key={sys.id}>
+                        <TableCell className="font-medium whitespace-nowrap">{sys.system_name}</TableCell>
+                        <TableCell className="text-slate-500">{sys.system_version}</TableCell>
+                        <TableCell>
+                          <span className="text-sm font-medium px-2 py-1 bg-slate-100 rounded-md text-slate-700 whitespace-nowrap">{sys.risk_classification}</span>
+                        </TableCell>
+                        <TableCell>
+                          <StatusBadge status={sys.lifecycle_status} />
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <Link to={`/system/${sys.id}`} className="text-primary font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-sm min-h-[44px] flex items-center justify-end whitespace-nowrap">
+                            {t('dashboard.viewDetails')}
+                          </Link>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    {systems.length === 0 && (
+                      <TableRow>
+                        <TableCell colSpan={5} className="text-center text-slate-500 h-24">
+                          No systems registered yet.
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </div>
             )
           ) : (
             vendorsLoading ? (
               <SkeletonLoader rows={3} />
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead className="sticky top-0 bg-white z-10">Organization</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10">Username</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10">Email</TableHead>
-                    <TableHead className="sticky top-0 bg-white z-10 text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
+              <div className="w-full">
+                {/* Desktop Table */}
+                <div className="hidden md:block overflow-x-auto border-0">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="sticky top-0 bg-white z-10">Organization</TableHead>
+                        <TableHead className="sticky top-0 bg-white z-10">Username</TableHead>
+                        <TableHead className="sticky top-0 bg-white z-10">Email</TableHead>
+                        <TableHead className="sticky top-0 bg-white z-10 text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {vendors.map(v => (
+                        <TableRow key={v.id}>
+                          <TableCell className="font-medium">{v.organization || 'N/A'}</TableCell>
+                          <TableCell>{v.username}</TableCell>
+                          <TableCell>{v.email}</TableCell>
+                          <TableCell className="text-right space-x-2">
+                            <Button variant="outline" size="sm" onClick={() => handleReject(v.id)} className="text-destructive border-destructive hover:bg-destructive/10 hover:text-destructive min-h-[44px]">
+                              <XCircle className="w-4 h-4 mr-1.5" /> Reject
+                            </Button>
+                            <Button size="sm" onClick={() => handleApprove(v.id)} className="min-h-[44px]">
+                              <CheckCircle className="w-4 h-4 mr-1.5" /> Approve
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                      {vendors.length === 0 && (
+                        <TableRow>
+                          <TableCell colSpan={4} className="text-center text-slate-500 h-24">
+                            No pending vendors awaiting approval.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </TableBody>
+                  </Table>
+                </div>
+                
+                {/* Mobile Cards */}
+                <div className="md:hidden flex flex-col gap-4 p-4">
                   {vendors.map(v => (
-                    <TableRow key={v.id}>
-                      <TableCell className="font-medium">{v.organization || 'N/A'}</TableCell>
-                      <TableCell>{v.username}</TableCell>
-                      <TableCell>{v.email}</TableCell>
-                      <TableCell className="text-right space-x-2">
-                        <Button variant="outline" size="sm" onClick={() => handleReject(v.id)} className="text-destructive border-destructive hover:bg-destructive/10 hover:text-destructive">
-                          <XCircle className="w-4 h-4 mr-1.5" /> Reject
+                    <div key={v.id} className="bg-white border border-slate-200 rounded-lg p-4 flex flex-col gap-3 shadow-sm">
+                      <div>
+                        <p className="font-semibold text-slate-900">{v.organization || 'N/A'}</p>
+                        <p className="text-sm text-slate-500">{v.username} • {v.email}</p>
+                      </div>
+                      <div className="flex flex-col gap-2 mt-2">
+                        <Button onClick={() => handleApprove(v.id)} className="w-full min-h-[44px]">
+                          <CheckCircle className="w-4 h-4 mr-1.5" /> Approve Vendor
                         </Button>
-                        <Button size="sm" onClick={() => handleApprove(v.id)}>
-                          <CheckCircle className="w-4 h-4 mr-1.5" /> Approve
+                        <Button variant="outline" onClick={() => handleReject(v.id)} className="w-full text-destructive border-destructive hover:bg-destructive/10 min-h-[44px]">
+                          <XCircle className="w-4 h-4 mr-1.5" /> Reject Vendor
                         </Button>
-                      </TableCell>
-                    </TableRow>
+                      </div>
+                    </div>
                   ))}
                   {vendors.length === 0 && (
-                    <TableRow>
-                      <TableCell colSpan={4} className="text-center text-slate-500 h-24">
-                        No pending vendors awaiting approval.
-                      </TableCell>
-                    </TableRow>
+                    <div className="text-center text-slate-500 p-8 border border-dashed rounded-lg">
+                      No pending vendors awaiting approval.
+                    </div>
                   )}
-                </TableBody>
-              </Table>
+                </div>
+              </div>
             )
           )}
         </CardContent>

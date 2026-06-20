@@ -141,55 +141,57 @@ export default function AuditLogViewer() {
           {loading ? (
             <SkeletonLoader rows={10} />
           ) : (
-            <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="sticky top-0 bg-white z-10">Seq</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">Timestamp</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">Event</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">System ID</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">Actor</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">Hash Fragment</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {logs.map(log => (
-                  <React.Fragment key={log.id}>
-                    <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)}`}>
-                      <TableCell className="text-slate-500">#{log.sequence_number}</TableCell>
-                      <TableCell className="text-slate-600">{new Date(log.timestamp).toLocaleString()}</TableCell>
-                      <TableCell className="font-bold text-slate-900">{log.event_type}</TableCell>
-                      <TableCell className="text-slate-600">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
-                      <TableCell className="text-slate-600">{log.actor_type}</TableCell>
-                      <TableCell className="text-slate-400">
-                        {log.entry_hash ? log.entry_hash.substring(0, 16) + '...' : 'N/A'}
-                      </TableCell>
-                    </TableRow>
-                    {expandedRow === log.id && (
-                      <TableRow className="bg-slate-50 hover:bg-slate-50">
-                        <TableCell colSpan={6} className="p-4">
-                          <Card className="shadow-sm">
-                            <CardContent className="p-4 font-sans">
-                              <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {Object.entries(log.event_data || {}).map(([key, value]) => (
-                                  <div key={key} className="flex flex-col">
-                                    <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
-                                    <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
-                                      {typeof value === 'object' ? JSON.stringify(value) : String(value)}
-                                    </span>
-                                  </div>
-                                ))}
-                              </div>
-                            </CardContent>
-                          </Card>
+            <div className="overflow-x-auto w-full border-0">
+              <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Seq</TableHead>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Timestamp</TableHead>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Event</TableHead>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">System ID</TableHead>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Actor</TableHead>
+                    <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Hash Fragment</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {logs.map(log => (
+                    <React.Fragment key={log.id}>
+                      <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)} min-h-[44px]`}>
+                        <TableCell className="text-slate-500 whitespace-nowrap">#{log.sequence_number}</TableCell>
+                        <TableCell className="text-slate-600 whitespace-nowrap">{new Date(log.timestamp).toLocaleString()}</TableCell>
+                        <TableCell className="font-bold text-slate-900 whitespace-nowrap">{log.event_type}</TableCell>
+                        <TableCell className="text-slate-600 whitespace-nowrap">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
+                        <TableCell className="text-slate-600 whitespace-nowrap">{log.actor_type}</TableCell>
+                        <TableCell className="text-slate-400 whitespace-nowrap">
+                          {log.entry_hash ? log.entry_hash.substring(0, 16) + '...' : 'N/A'}
                         </TableCell>
                       </TableRow>
-                    )}
-                  </React.Fragment>
-                ))}
-              </TableBody>
-            </Table>
+                      {expandedRow === log.id && (
+                        <TableRow className="bg-slate-50 hover:bg-slate-50">
+                          <TableCell colSpan={6} className="p-4">
+                            <Card className="shadow-sm">
+                              <CardContent className="p-4 font-sans">
+                                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-x-auto">
+                                  {Object.entries(log.event_data || {}).map(([key, value]) => (
+                                    <div key={key} className="flex flex-col">
+                                      <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
+                                      <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
+                                        {typeof value === 'object' ? JSON.stringify(value) : String(value)}
+                                      </span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </CardContent>
+                            </Card>
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           )}
         </CardContent>
       </Card>
