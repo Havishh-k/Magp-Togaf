@@ -61,6 +61,10 @@ export default function SystemDetail() {
       api.post(`/registry/${id}/promote?new_status=APPROVED`).then(fetchSystem);
     } else if (actionType === 'SHADOW_MODE') {
       api.post(`/registry/${id}/promote?new_status=SHADOW_MODE`).then(fetchSystem);
+    } else if (actionType === 'CANARY_MODE') {
+      api.post(`/registry/${id}/promote?new_status=CANARY_MODE`).then(fetchSystem);
+    } else if (actionType === 'PRODUCTION') {
+      api.post(`/registry/${id}/promote?new_status=PRODUCTION`).then(fetchSystem);
     } else if (actionType === 'REACTIVATE') {
       api.post(`/registry/${id}/reactivate`).then(fetchSystem);
     }
@@ -220,6 +224,12 @@ export default function SystemDetail() {
               )}
               {sys.lifecycle_status === 'APPROVED' && (
                 <Button onClick={() => handleAction('SHADOW_MODE')} className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-[44px]">Promote to Shadow Mode</Button>
+              )}
+              {sys.lifecycle_status === 'SHADOW_MODE' && (
+                <Button onClick={() => handleAction('CANARY_MODE')} className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-[44px]">Promote to Canary Mode</Button>
+              )}
+              {sys.lifecycle_status === 'CANARY_MODE' && (
+                <Button onClick={() => handleAction('PRODUCTION')} className="bg-primary text-primary-foreground hover:bg-primary/90 min-h-[44px]">Promote to Production</Button>
               )}
               {sys.lifecycle_status !== 'SUSPENDED' && sys.lifecycle_status !== 'REJECTED' && (
                 <Button onClick={() => handleAction('SUSPEND')} variant="outline" className="md:ml-auto text-destructive border-destructive hover:bg-destructive/10 min-h-[44px]">Suspend System</Button>
