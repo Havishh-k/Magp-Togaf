@@ -14,11 +14,11 @@ export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const performLogin = async (loginUser, loginPass) => {
     setLoading(true);
+    setError('');
     try {
-      await login(username, password);
+      await login(loginUser, loginPass);
       const urlParams = new URLSearchParams(window.location.search);
       const redirectTo = urlParams.get('redirectTo');
       navigate(redirectTo || '/dashboard');
@@ -28,6 +28,11 @@ export default function Login() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await performLogin(username, password);
   };
 
   return (
@@ -58,7 +63,37 @@ export default function Login() {
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="space-y-1.5">
+            <div className="flex gap-2 pb-2">
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full text-xs bg-slate-50 dark:bg-slate-900 border-primary/20 hover:bg-primary/10" 
+                onClick={() => performLogin('admin', 'password123')} 
+                disabled={loading}
+              >
+                Demo: Ministry
+              </Button>
+              <Button 
+                type="button" 
+                variant="outline" 
+                className="w-full text-xs bg-slate-50 dark:bg-slate-900 border-primary/20 hover:bg-primary/10" 
+                onClick={() => performLogin('vendor', 'password123')} 
+                disabled={loading}
+              >
+                Demo: Vendor
+              </Button>
+            </div>
+            
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t border-border" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or sign in manually</span>
+              </div>
+            </div>
+
+            <div className="space-y-1.5 pt-2">
               <label className="text-sm font-medium text-foreground">Username</label>
               <Input
                 type="text"
