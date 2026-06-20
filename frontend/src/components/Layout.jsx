@@ -121,21 +121,6 @@ export default function Layout() {
           </div>
           
           <div className="flex items-center gap-6">
-            {/* God Mode Pitch Switcher */}
-            <div className="flex items-center gap-2 bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-200 shadow-sm print:hidden">
-              <span className="text-xs font-bold text-indigo-800 tracking-wider">{t('nav.currentView')}</span>
-              <select 
-                className="bg-transparent text-xs font-bold text-indigo-900 focus:outline-none cursor-pointer uppercase"
-                value={user?.role}
-                onChange={(e) => {
-                  if (e.target.value === 'ministry') login('admin', 'password123');
-                  else if (e.target.value === 'vendor') login('vendor', 'password123');
-                }}
-              >
-                <option value="ministry">MINISTRY ADMIN</option>
-                <option value="vendor">SYSTEM VENDOR</option>
-              </select>
-            </div>
           
             <div className="flex items-center gap-4">
               <button 
