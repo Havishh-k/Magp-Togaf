@@ -89,22 +89,7 @@ export default function AuditLogViewer() {
         </div>
         
         <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
-          <div className="flex bg-slate-100 rounded-md p-1 border border-slate-200">
-            <button 
-              onClick={() => setDensity('comfortable')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'comfortable' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
-              title="Comfortable Density"
-            >
-              <AlignJustify className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={() => setDensity('compact')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'compact' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
-              title="Compact Density"
-            >
-              <List className="w-4 h-4" />
-            </button>
-          </div>
+
           <Button 
             onClick={verifyChain}
             disabled={verifyStatus === 'checking'}
