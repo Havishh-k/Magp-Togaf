@@ -4,7 +4,7 @@ import api from '../api';
 import { useAuth } from '../context/AuthContext';
 import StatusBadge from '../components/StatusBadge';
 import ConfirmModal from '../components/ConfirmModal';
-import { ArrowLeft, Download } from 'lucide-react';
+import { ArrowLeft, Download, FastForward, AlertTriangle } from 'lucide-react';
 import { useReactToPrint } from 'react-to-print';
 import { toast } from 'sonner';
 
@@ -89,7 +89,9 @@ export default function SystemDetail() {
   const handleFastForward = async () => {
     try {
       await api.post(`/registry/${id}/fast-forward`);
-      toast.success('⏱️ Time Travel Simulated! Expiration date moved backward by 12 months.');
+      toast.success('Time Travel Simulated! Expiration date moved backward by 12 months.', {
+        icon: <FastForward className="w-5 h-5" />
+      });
       fetchSystem();
     } catch (err) {
       console.error(err);
@@ -111,7 +113,7 @@ export default function SystemDetail() {
         <div className="flex flex-col sm:flex-row w-full sm:w-auto gap-2">
           {user?.role === 'ministry' && (
             <Button onClick={handleFastForward} variant="outline" className="w-full sm:w-auto gap-2 text-warning-700 bg-warning/10 hover:bg-warning/20 border-warning/20">
-              ⏩ Fast-Forward 12 Months
+              <FastForward className="w-4 h-4" /> Fast-Forward 12 Months
             </Button>
           )}
           <Button onClick={() => handlePrint()} className="w-full sm:w-auto gap-2">
@@ -169,7 +171,7 @@ export default function SystemDetail() {
               {isExpired && (
                 <div className="bg-destructive/10 p-5 rounded-lg border-2 border-destructive/30 animate-pulse print:animate-none">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xl">⚠️</span>
+                    <AlertTriangle className="w-6 h-6 text-destructive shrink-0" />
                     <h3 className="text-base font-bold text-destructive uppercase tracking-wide">Suspension Warning: Registration Expired</h3>
                   </div>
                   <p className="text-sm text-destructive font-medium leading-relaxed">
