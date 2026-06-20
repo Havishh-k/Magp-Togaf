@@ -19,7 +19,7 @@ settings = Settings()
 
 from routers import auth, submission, registry, notifications, audit, bias, public_registry
 
-app = FastAPI(title="Maliba AI Governance Platform API")
+app = FastAPI(title="Equalyze AI Governance Platform API")
 
 app.include_router(auth.router)
 app.include_router(submission.router)

@@ -36,7 +36,7 @@ def explain_bias_report(subgroup_results: dict) -> str:
     
     prompt = (
         "<|im_start|>system\n"
-        "You are an assistant for the Maliba Ministry of Health. In exactly two simple sentences, summarize this AI bias report for a non-technical manager. Highlight which patient groups are harmed.<|im_end|>\n"
+        "You are an assistant for the Equalyze Ministry of Health. In exactly two simple sentences, summarize this AI bias report for a non-technical manager. Highlight which patient groups are harmed.<|im_end|>\n"
         "<|im_start|>user\n"
         f"Bias Report JSON:\n{json.dumps(subgroup_results, indent=2)}\n<|im_end|>\n"
         "<|im_start|>assistant\n"

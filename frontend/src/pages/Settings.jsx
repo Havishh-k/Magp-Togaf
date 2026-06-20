@@ -157,7 +157,7 @@ export default function Settings() {
           <Card>
             <CardHeader>
               <CardTitle>System Preferences</CardTitle>
-              <CardDescription>Customize how the Maliba AI Governance Platform looks and behaves for you.</CardDescription>
+              <CardDescription>Customize how the Equalyze AI Governance Platform looks and behaves for you.</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-6 max-w-md">

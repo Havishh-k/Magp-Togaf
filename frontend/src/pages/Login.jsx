@@ -43,10 +43,10 @@ export default function Login() {
       <Card className="max-w-md w-full shadow-lg border-border">
         <CardHeader className="flex flex-col items-center space-y-2 text-center pb-6">
           <div className="w-12 h-12 bg-primary/10 text-primary rounded-full flex items-center justify-center mb-2">
-            <img src="/apple-touch-icon.png" alt="Maliba Logo" className="w-8 h-8 rounded-lg" />
+            <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-8 h-8 rounded-lg" />
           </div>
           <CardTitle className="text-2xl font-bold">Sign In</CardTitle>
-          <CardDescription>Maliba AI Governance Platform</CardDescription>
+          <CardDescription>Equalyze AI Governance Platform</CardDescription>
         </CardHeader>
         
         <CardContent>

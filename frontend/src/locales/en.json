@@ -17,12 +17,12 @@
     "currentView": "CURRENT VIEW:"
   },
   "landing": {
-    "heroHeadline": "Maliba AI Governance Platform",
+    "heroHeadline": "Equalyze AI Governance Platform",
     "heroSubheadline": "Automated, policy-driven oversight for AI deployments in the national health network. Enforcing WHO ethics through zero-trust governance.",
     "ctaMinistry": "Login",
     "ctaVendor": "Vendor Submission Portal",
     "card1Title": "Context-Aware Fairness",
-    "card1Desc": "Automated bias detection explicitly calibrated for Maliba's rural populations and aging facility equipment.",
+    "card1Desc": "Automated bias detection explicitly calibrated for Equalyze's rural populations and aging facility equipment.",
     "card2Title": "Policy as Code",
     "card2Desc": "Deterministic enforcement of WHO AI ethics principles without requiring in-house data science expertise.",
     "card3Title": "Cryptographic Accountability",

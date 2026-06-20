@@ -17,12 +17,12 @@
     "currentView": "VUE ACTUELLE :"
   },
   "landing": {
-    "heroHeadline": "Plateforme de Gouvernance de l'IA Maliba",
+    "heroHeadline": "Plateforme de Gouvernance de l'IA Equalyze",
     "heroSubheadline": "Surveillance automatisée et basée sur des politiques pour les déploiements d'IA dans le réseau national de santé. Application de l'éthique de l'OMS grâce à une gouvernance zéro-confiance.",
     "ctaMinistry": "Connexion",
     "ctaVendor": "Portail de Soumission des Fournisseurs",
     "card1Title": "Équité Sensible au Contexte",
-    "card1Desc": "Détection automatisée des biais explicitement calibrée pour les populations rurales du Maliba et l'équipement vieillissant des installations.",
+    "card1Desc": "Détection automatisée des biais explicitement calibrée pour les populations rurales d'Equalyze et l'équipement vieillissant des installations.",
     "card2Title": "Politique en tant que Code",
     "card2Desc": "Application déterministe des principes d'éthique de l'IA de l'OMS sans nécessiter d'expertise interne en science des données.",
     "card3Title": "Responsabilité Cryptographique",

@@ -31,7 +31,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
         {(sidebarOpen || window.innerWidth < 768) ? (
           <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in flex-1">
             <Shield className="w-6 h-6 shrink-0" />
-            <span className="font-bold tracking-tight">Maliba AI</span>
+            <span className="font-bold tracking-tight">Equalyze AI</span>
           </div>
         ) : (
           <Shield className="w-6 h-6 mx-auto shrink-0" />

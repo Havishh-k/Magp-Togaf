@@ -34,12 +34,12 @@ export default function Layout() {
         <div className="h-16 flex items-center justify-between px-4 border-b border-primary-800">
           {sidebarOpen && (
             <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in">
-              <img src="/apple-touch-icon.png" alt="Maliba Logo" className="w-6 h-6 shrink-0" />
-              <span className="font-bold tracking-tight text-white">Maliba AI</span>
+              <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 shrink-0" />
+              <span className="font-bold tracking-tight text-white">Equalyze AI</span>
             </div>
           )}
           {!sidebarOpen && (
-            <img src="/apple-touch-icon.png" alt="Maliba Logo" className="w-6 h-6 mx-auto shrink-0" />
+            <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 mx-auto shrink-0" />
           )}
         </div>
         

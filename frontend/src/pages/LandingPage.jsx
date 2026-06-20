@@ -18,8 +18,8 @@ export default function LandingPage() {
       {/* Global Header */}
       <header className="h-16 bg-white border-b border-slate-200 sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 lg:px-8 shadow-sm">
         <div className="flex items-center gap-2">
-          <img src="/apple-touch-icon.png" alt="Maliba Logo" className="w-6 h-6 shrink-0 rounded-md" />
-          <span className="font-bold tracking-tight text-slate-900 text-lg">Maliba AI</span>
+          <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 shrink-0 rounded-md" />
+          <span className="font-bold tracking-tight text-slate-900 text-lg">Equalyze AI</span>
         </div>
         <button 
           onClick={toggleLanguage}
@@ -36,7 +36,7 @@ export default function LandingPage() {
         {/* Hero Section */}
         <section className="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold text-slate-900 tracking-tight mb-6">
-            {t('landing.heroHeadline', "Maliba AI Governance Platform")}
+            {t('landing.heroHeadline', "Equalyze AI Governance Platform")}
           </h1>
           <p className="text-lg sm:text-xl text-slate-500 max-w-3xl mx-auto mb-10 leading-relaxed">
             {t('landing.heroSubheadline', "Automated, policy-driven oversight for AI deployments in the national health network. Enforcing WHO ethics through zero-trust governance.")}
@@ -73,7 +73,7 @@ export default function LandingPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-slate-500 leading-relaxed">
-                  {t('landing.card1Desc', "Automated bias detection explicitly calibrated for Maliba's rural populations and aging facility equipment.")}
+                  {t('landing.card1Desc', "Automated bias detection explicitly calibrated for Equalyze's rural populations and aging facility equipment.")}
                 </p>
               </CardContent>
             </Card>
