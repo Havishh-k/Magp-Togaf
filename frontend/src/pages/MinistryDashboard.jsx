@@ -72,11 +72,11 @@ export default function MinistryDashboard() {
             <Table className={density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}>
               <TableHeader>
                 <TableRow>
-                  <TableHead className="sticky top-0 bg-white z-10">{t('dashboard.systemName')}</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">Version</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">{t('dashboard.riskLevel')}</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">{t('dashboard.status')}</TableHead>
-                  <TableHead className="sticky top-0 bg-white z-10">{t('dashboard.action')}</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10 w-[250px]">{t('dashboard.systemName')}</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10 w-[100px]">Version</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.riskLevel')}</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10 w-[150px]">{t('dashboard.status')}</TableHead>
+                  <TableHead className="sticky top-0 bg-white z-10 text-right">{t('dashboard.action')}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -90,7 +90,7 @@ export default function MinistryDashboard() {
                     <TableCell>
                       <StatusBadge status={sys.lifecycle_status} />
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="text-right">
                       <Link to={`/system/${sys.id}`} className="text-primary font-medium underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary rounded-sm">
                         {t('dashboard.viewDetails')}
                       </Link>
