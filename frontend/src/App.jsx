@@ -8,6 +8,7 @@ import SystemDetail from './pages/SystemDetail';
 import AuditLog from './pages/AuditLog';
 import Notifications from './pages/Notifications';
 import LandingPage from './pages/LandingPage';
+import Register from './pages/Register';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ function AppRoutes() {
     <Routes>
       <Route path="/" element={user ? <Navigate to="/dashboard" /> : <LandingPage />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
+      <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
       
       <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route path="/dashboard" element={<Dashboard />} />

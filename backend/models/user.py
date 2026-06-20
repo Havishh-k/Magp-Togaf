@@ -13,3 +13,4 @@ class User(Base):
     organization = Column(String)
     created_at = Column(DateTime, default=func.now())
     is_active = Column(Boolean, default=True)
+    is_approved = Column(Boolean, default=False)

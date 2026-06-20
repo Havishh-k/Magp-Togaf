@@ -34,7 +34,8 @@ def create_user(db: Session, user: UserCreate):
         email=user.email,
         password_hash=hashed_password,
         role=user.role,
-        organization=user.organization
+        organization=user.organization,
+        is_approved=(user.role != "vendor")
     )
     db.add(db_user)
     db.commit()

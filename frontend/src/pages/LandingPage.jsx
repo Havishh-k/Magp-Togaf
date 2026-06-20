@@ -48,15 +48,7 @@ export default function LandingPage() {
               className="w-full sm:w-auto font-medium shadow-sm transition-transform hover:scale-105"
               onClick={() => navigate('/login')}
             >
-              {t('landing.ctaMinistry', "Ministry Login")}
-            </Button>
-            <Button 
-              variant="outline" 
-              size="lg"
-              className="w-full sm:w-auto font-medium shadow-sm transition-transform hover:scale-105 border-slate-300"
-              onClick={() => navigate('/login?redirectTo=/submit')}
-            >
-              {t('landing.ctaVendor', "Vendor Submission Portal")}
+              {t('landing.ctaMinistry', "Login")}
             </Button>
           </div>
         </section>

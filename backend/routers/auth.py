@@ -2,11 +2,14 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from database import get_db
+from models.user import User
 from services.auth_service import verify_password, get_user, create_access_token, create_user, ACCESS_TOKEN_EXPIRE_MINUTES
 from schemas.auth import Token, UserResponse, UserCreate
 from datetime import timedelta
 from jose import jwt, JWTError
 from services.auth_service import settings
+from services.audit_service import append_audit_entry
+from typing import List
 
 router = APIRouter(prefix="/auth", tags=["auth"])
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -29,6 +32,11 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
         raise credentials_exception
     return user
 
+def require_admin(current_user: User = Depends(get_current_user)):
+    if current_user.role not in ["ministry", "admin"]:
+        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Not authorized")
+    return current_user
+
 @router.post("/login", response_model=Token)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = get_user(db, form_data.username)
@@ -38,6 +46,11 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    if not user.is_approved:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Account pending administrative approval"
+        )
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
         data={"sub": user.username, "role": user.role}, expires_delta=access_token_expires
@@ -46,7 +59,6 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
 
 @router.post("/register", response_model=UserResponse)
 def register(user: UserCreate, db: Session = Depends(get_db)):
-    # In prototype, open registration for simplicity or restrict to admin
     db_user = get_user(db, username=user.username)
     if db_user:
         raise HTTPException(status_code=400, detail="Username already registered")
@@ -55,3 +67,28 @@ def register(user: UserCreate, db: Session = Depends(get_db)):
 @router.get("/me", response_model=UserResponse)
 def read_users_me(current_user = Depends(get_current_user)):
     return current_user
+
+@router.get("/vendors/pending", response_model=List[UserResponse])
+def get_pending_vendors(db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
+    vendors = db.query(User).filter(User.is_approved == False, User.role == "vendor").all()
+    return vendors
+
+@router.post("/vendors/{user_id}/approve", response_model=UserResponse)
+def approve_vendor(user_id: str, db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
+    vendor = db.query(User).filter(User.id == user_id).first()
+    if not vendor:
+        raise HTTPException(status_code=404, detail="Vendor not found")
+    vendor.is_approved = True
+    db.commit()
+    db.refresh(vendor)
+    append_audit_entry(db, "VENDOR_APPROVED", {"vendor_id": vendor.id, "vendor_name": vendor.username}, "MINISTRY", "SYSTEM", current_user.id)
+    return vendor
+
+@router.delete("/vendors/{user_id}")
+def reject_vendor(user_id: str, db: Session = Depends(get_db), current_user: User = Depends(require_admin)):
+    vendor = db.query(User).filter(User.id == user_id, User.is_approved == False).first()
+    if not vendor:
+        raise HTTPException(status_code=404, detail="Pending vendor not found")
+    db.delete(vendor)
+    db.commit()
+    return {"status": "deleted"}

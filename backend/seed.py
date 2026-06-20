@@ -20,7 +20,8 @@ admin = User(
     email="admin@gov.ml",
     password_hash=get_password_hash("password123"),
     role="ministry",
-    organization="Ministry of Health"
+    organization="Ministry of Health",
+    is_approved=True
 )
 vendor = User(
     id=uuid.uuid4().hex,
@@ -28,7 +29,8 @@ vendor = User(
     email="vendor@healthtech.com",
     password_hash=get_password_hash("password123"),
     role="vendor",
-    organization="HealthTech Solutions"
+    organization="HealthTech Solutions",
+    is_approved=True
 )
 db.add_all([admin, vendor])
 db.commit()
