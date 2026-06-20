@@ -10,6 +10,7 @@ import Notifications from './pages/Notifications';
 import LandingPage from './pages/LandingPage';
 import Register from './pages/Register';
 import Settings from './pages/Settings';
+import PublicRegistry from './pages/PublicRegistry';
 
 const ProtectedRoute = ({ children }) => {
   const { user } = useAuth();
@@ -25,6 +26,7 @@ function AppRoutes() {
       <Route path="/" element={user ? <Navigate to="/dashboard" /> : <LandingPage />} />
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
       <Route path="/register" element={user ? <Navigate to="/dashboard" /> : <Register />} />
+      <Route path="/public-registry" element={<PublicRegistry />} />
       
       <Route element={<ProtectedRoute><AppShell /></ProtectedRoute>}>
         <Route path="/dashboard" element={<Dashboard />} />

@@ -17,7 +17,7 @@ class Settings(BaseSettings):
 
 settings = Settings()
 
-from routers import auth, submission, registry, notifications, audit, bias
+from routers import auth, submission, registry, notifications, audit, bias, public
 
 app = FastAPI(title="Maliba AI Governance Platform API")
 
@@ -27,6 +27,7 @@ app.include_router(registry.router)
 app.include_router(notifications.router)
 app.include_router(audit.router)
 app.include_router(bias.router)
+app.include_router(public.router)
 
 app.add_middleware(
     CORSMiddleware,

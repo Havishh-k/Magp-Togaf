@@ -31,3 +31,16 @@ class RegistryItem(BaseModel):
 
 class SuspendRequest(BaseModel):
     reason: str
+
+class PublicSystemResponse(BaseModel):
+    id: str
+    system_name: str
+    system_version: str
+    risk_classification: str
+    intended_use_case: str
+    developer_organization: str
+    local_validation_evidence: Optional[str] = None
+    production_approved_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True

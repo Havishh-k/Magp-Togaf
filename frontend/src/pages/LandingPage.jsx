@@ -46,6 +46,14 @@ export default function LandingPage() {
             <Button 
               size="lg"
               className="w-full sm:w-auto font-medium shadow-sm transition-transform hover:scale-105"
+              onClick={() => navigate('/public-registry')}
+            >
+              Public Registry
+            </Button>
+            <Button 
+              size="lg"
+              variant="outline"
+              className="w-full sm:w-auto font-medium shadow-sm transition-transform hover:scale-105"
               onClick={() => navigate('/login')}
             >
               {t('landing.ctaMinistry', "Login")}
