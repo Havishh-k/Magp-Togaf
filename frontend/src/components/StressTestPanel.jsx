@@ -40,17 +40,17 @@ export default function StressTestPanel() {
   };
 
   return (
-    <div className="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden mb-6 transition-all duration-300">
+    <div className="bg-white dark:bg-slate-900 border border-neutral-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden mb-6 transition-all duration-300">
       <button 
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full px-6 py-4 border-b border-neutral-200 bg-neutral-50 flex items-center justify-between hover:bg-neutral-100 transition-colors"
+        className="w-full px-6 py-4 border-b border-neutral-200 dark:border-slate-800 bg-neutral-50 dark:bg-slate-800/50 flex items-center justify-between hover:bg-neutral-100 dark:hover:bg-slate-800 transition-colors"
       >
         <div className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-indigo-600" />
-          <h2 className="text-lg font-bold text-neutral-900">Ephemeral Stress Test Simulation</h2>
+          <Activity className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+          <h2 className="text-lg font-bold text-neutral-900 dark:text-white">Ephemeral Stress Test Simulation</h2>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-xs font-semibold px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full">
+          <span className="text-xs font-semibold px-2 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full">
             Sandboxed
           </span>
           {isExpanded ? <ChevronUp className="w-5 h-5 text-neutral-500" /> : <ChevronDown className="w-5 h-5 text-neutral-500" />}
@@ -58,24 +58,24 @@ export default function StressTestPanel() {
       </button>
       
       {isExpanded && (
-        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-neutral-100">
+        <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-neutral-100 dark:border-slate-800">
           {/* Controls */}
           <div className="col-span-1 space-y-6">
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <SlidersHorizontal className="w-4 h-4 text-neutral-500" />
-                <h3 className="font-semibold text-neutral-700">Demographic Weights</h3>
+                <h3 className="font-semibold text-neutral-700 dark:text-neutral-300">Demographic Weights</h3>
               </div>
               
               <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                 {Object.entries(weights).map(([category, vals]) => (
-                  <div key={category} className="space-y-3 bg-neutral-50 p-4 rounded-lg border border-neutral-200">
-                    <h4 className="text-sm font-bold text-neutral-800 capitalize">{category.replace('_', ' ')}</h4>
+                  <div key={category} className="space-y-3 bg-neutral-50 dark:bg-slate-950 p-4 rounded-lg border border-neutral-200 dark:border-slate-800">
+                    <h4 className="text-sm font-bold text-neutral-800 dark:text-neutral-200 capitalize">{category.replace('_', ' ')}</h4>
                     {Object.entries(vals).map(([k, v]) => (
                       <div key={k}>
                         <div className="flex justify-between text-xs mb-1">
                           <span className="text-neutral-600">{k}</span>
-                          <span className="font-mono text-indigo-600">{v.toFixed(1)}x</span>
+                          <span className="font-mono text-indigo-600 dark:text-indigo-400">{v.toFixed(1)}x</span>
                         </div>
                         <input 
                           type="range" 
@@ -84,7 +84,7 @@ export default function StressTestPanel() {
                           step="0.1" 
                           value={v}
                           onChange={(e) => handleWeightChange(category, k, e.target.value)}
-                          className="w-full h-1.5 bg-neutral-200 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                          className="w-full h-1.5 bg-neutral-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-indigo-600"
                         />
                       </div>
                     ))}
@@ -107,11 +107,11 @@ export default function StressTestPanel() {
           <div className="col-span-1 md:col-span-2">
             {results ? (
               <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
-                <h3 className="font-semibold text-neutral-700 mb-4">Simulation Results (Delta)</h3>
+                <h3 className="font-semibold text-neutral-700 dark:text-neutral-300 mb-4">Simulation Results (Delta)</h3>
                 <BiasReport biasData={results} />
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center text-neutral-400 border-2 border-dashed border-neutral-200 rounded-xl p-8">
+              <div className="h-full flex flex-col items-center justify-center text-neutral-400 border-2 border-dashed border-neutral-200 dark:border-slate-700 rounded-xl p-8">
                 <Activity className="w-12 h-12 mb-3 text-neutral-300" />
                 <p>Adjust weights and run simulation to see ephemeral bias impact.</p>
               </div>

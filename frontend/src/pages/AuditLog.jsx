@@ -84,7 +84,7 @@ export default function AuditLogViewer() {
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Cryptographic Audit Log</h1>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Cryptographic Audit Log</h1>
           <p className="text-sm text-slate-500">Immutable hash-chain ledger of all system events. Click a row to view details.</p>
         </div>
         
@@ -92,14 +92,14 @@ export default function AuditLogViewer() {
           <div className="flex bg-slate-100 rounded-md p-1 border border-slate-200">
             <button 
               onClick={() => setDensity('comfortable')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'comfortable' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'comfortable' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
               title="Comfortable Density"
             >
               <AlignJustify className="w-4 h-4" />
             </button>
             <button 
               onClick={() => setDensity('compact')}
-              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'compact' ? 'bg-white shadow-sm text-primary' : 'text-slate-500 hover:text-slate-700'}`}
+              className={`p-1.5 rounded-sm transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-primary ${density === 'compact' ? 'bg-white shadow-sm text-primary dark:bg-slate-700 dark:text-white' : 'text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'}`}
               title="Compact Density"
             >
               <List className="w-4 h-4" />
@@ -147,12 +147,12 @@ export default function AuditLogViewer() {
                 <Table className={`whitespace-nowrap ${density === 'compact' ? '[&_td]:py-2 [&_th]:py-2' : ''}`}>
                   <TableHeader>
                     <TableRow>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Seq</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Timestamp</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Event</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">System ID</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Actor</TableHead>
-                      <TableHead className="sticky top-0 bg-white z-10 whitespace-nowrap">Hash Fragment</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">Seq</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">Timestamp</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">Event</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">System ID</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">Actor</TableHead>
+                      <TableHead className="sticky top-0 bg-white dark:bg-slate-900 z-10 whitespace-nowrap">Hash Fragment</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -161,7 +161,7 @@ export default function AuditLogViewer() {
                         <TableRow onClick={() => toggleRow(log.id)} className={`font-mono text-sm ${getRowClass(log)} min-h-[44px]`}>
                           <TableCell className="text-slate-500 whitespace-nowrap">#{log.sequence_number}</TableCell>
                           <TableCell className="text-slate-600 whitespace-nowrap">{new Date(log.timestamp).toLocaleString()}</TableCell>
-                          <TableCell className="font-bold text-slate-900 whitespace-nowrap">{log.event_type}</TableCell>
+                          <TableCell className="font-bold text-slate-900 dark:text-white whitespace-nowrap">{log.event_type}</TableCell>
                           <TableCell className="text-slate-600 whitespace-nowrap">{log.system_id ? log.system_id.substring(0, 8) + '...' : 'N/A'}</TableCell>
                           <TableCell className="text-slate-600 whitespace-nowrap">{log.actor_type}</TableCell>
                           <TableCell className="text-slate-400 whitespace-nowrap">
@@ -169,7 +169,7 @@ export default function AuditLogViewer() {
                           </TableCell>
                         </TableRow>
                         {expandedRow === log.id && (
-                          <TableRow className="bg-slate-50 hover:bg-slate-50">
+                          <TableRow className="bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-50 dark:hover:bg-slate-900/50">
                             <TableCell colSpan={6} className="p-4">
                               <Card className="shadow-sm">
                                 <CardContent className="p-4 font-sans">
@@ -178,7 +178,7 @@ export default function AuditLogViewer() {
                                     {Object.entries(log.event_data || {}).map(([key, value]) => (
                                       <div key={key} className="flex flex-col">
                                         <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
-                                        <span className="text-sm font-medium text-slate-900 truncate" title={String(value)}>
+                                        <span className="text-sm font-medium text-slate-900 dark:text-white truncate" title={String(value)}>
                                           {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                                         </span>
                                       </div>
@@ -196,24 +196,24 @@ export default function AuditLogViewer() {
               </div>
 
               {/* Mobile Cards */}
-              <div className="md:hidden flex flex-col divide-y divide-slate-100">
+              <div className="md:hidden flex flex-col divide-y divide-slate-100 dark:divide-slate-800">
                 {logs.map(log => {
                   const isExpanded = expandedRow === log.id;
                   let cardClass = "p-4 flex flex-col gap-2 transition-colors cursor-pointer ";
-                  if (verifyStatus === 'invalid' && tamperedSeq) {
-                    if (log.sequence_number === tamperedSeq) cardClass += "bg-destructive/10 border-l-4 border-destructive ";
-                    else if (log.sequence_number > tamperedSeq) cardClass += "bg-warning/10 border-l-4 border-warning-500 ";
-                    else cardClass += isExpanded ? "bg-slate-50 " : "bg-white hover:bg-slate-50 ";
-                  } else {
-                    cardClass += isExpanded ? "bg-slate-50 " : "bg-white hover:bg-slate-50 ";
-                  }
+                    if (verifyStatus === 'invalid' && tamperedSeq) {
+                      if (log.sequence_number === tamperedSeq) cardClass += "bg-destructive/10 border-l-4 border-destructive ";
+                      else if (log.sequence_number > tamperedSeq) cardClass += "bg-warning/10 border-l-4 border-warning-500 ";
+                      else cardClass += isExpanded ? "bg-slate-50 dark:bg-slate-800 " : "bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 ";
+                    } else {
+                      cardClass += isExpanded ? "bg-slate-50 dark:bg-slate-800 " : "bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 ";
+                    }
 
                   return (
                     <div key={log.id} className={cardClass} onClick={() => toggleRow(log.id)}>
                       <div className="flex justify-between items-start gap-2">
                         <div className="flex items-center gap-2">
                           <span className="font-mono text-xs font-semibold text-slate-500">#{log.sequence_number}</span>
-                          <span className="font-bold text-slate-900 text-sm">{log.event_type}</span>
+                          <span className="font-bold text-slate-900 dark:text-white text-sm">{log.event_type}</span>
                         </div>
                         <span className="text-xs text-slate-500">{new Date(log.timestamp).toLocaleDateString()} {new Date(log.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
                       </div>
@@ -232,11 +232,11 @@ export default function AuditLogViewer() {
                       {isExpanded && (
                         <div className="mt-3 pt-3 border-t border-slate-200">
                           <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">Event Payload Summary</h4>
-                          <div className="grid grid-cols-1 gap-2 bg-white p-3 rounded-md border border-slate-200">
+                          <div className="grid grid-cols-1 gap-2 bg-white dark:bg-slate-950 p-3 rounded-md border border-slate-200 dark:border-slate-800">
                             {Object.entries(log.event_data || {}).map(([key, value]) => (
                               <div key={key} className="flex flex-col">
                                 <span className="text-xs text-slate-500 capitalize">{key.replace(/_/g, ' ')}</span>
-                                <span className="text-sm font-medium text-slate-900 break-words" title={String(value)}>
+                                <span className="text-sm font-medium text-slate-900 dark:text-white break-words" title={String(value)}>
                                   {typeof value === 'object' ? JSON.stringify(value) : String(value)}
                                 </span>
                               </div>

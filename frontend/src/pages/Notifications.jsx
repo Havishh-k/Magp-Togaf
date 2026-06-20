@@ -37,7 +37,7 @@ export default function Notifications() {
   return (
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-neutral-900 flex items-center gap-2">
+        <h1 className="text-2xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
           <Bell className="w-6 h-6 text-neutral-500" />
           Notifications
           {unreadCount > 0 && (
@@ -56,21 +56,21 @@ export default function Notifications() {
         )}
       </div>
 
-      <div className="bg-white border border-neutral-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="bg-white dark:bg-slate-900 border border-neutral-200 dark:border-slate-800 rounded-xl shadow-sm overflow-hidden">
         {loading ? (
-          <div className="p-8 text-center text-neutral-500">Loading notifications...</div>
+          <div className="p-8 text-center text-neutral-500 dark:text-neutral-400">Loading notifications...</div>
         ) : notifications.length === 0 ? (
-          <div className="p-8 text-center text-neutral-500">You have no notifications.</div>
+          <div className="p-8 text-center text-neutral-500 dark:text-neutral-400">You have no notifications.</div>
         ) : (
-          <div className="divide-y divide-neutral-200">
+          <div className="divide-y divide-neutral-200 dark:divide-slate-800">
             {notifications.map(notif => (
               <div 
                 key={notif.id} 
-                className={clsx("p-4 transition-colors", notif.is_read ? "bg-white opacity-70" : "bg-primary-50/50")}
+                className={clsx("p-4 transition-colors", notif.is_read ? "bg-white dark:bg-slate-900 opacity-70" : "bg-primary-50/50 dark:bg-slate-800")}
               >
                 <div className="flex justify-between items-start gap-4">
                   <div>
-                    <h3 className={clsx("text-sm", notif.is_read ? "font-medium text-neutral-700" : "font-bold text-neutral-900")}>
+                    <h3 className={clsx("text-sm", notif.is_read ? "font-medium text-neutral-700 dark:text-neutral-300" : "font-bold text-neutral-900 dark:text-white")}>
                       {notif.title}
                     </h3>
                     <p className="text-sm text-neutral-600 mt-1">{notif.message}</p>
