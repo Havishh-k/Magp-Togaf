@@ -135,7 +135,7 @@ export default function PublicRegistry() {
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans flex flex-col">
       <header className="h-16 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-10 flex items-center px-4 sm:px-6 lg:px-8 shadow-sm">
         <div className="flex items-center gap-2 flex-1">
-          <img src="/favicon.svg" alt="Maliba Logo" className="w-6 h-6 shrink-0" />
+          <img src="/apple-touch-icon.png" alt="Maliba Logo" className="w-6 h-6 shrink-0 rounded-md" />
           <span className="font-bold tracking-tight text-slate-900 dark:text-white text-lg">Maliba Public Registry</span>
         </div>
         <Button variant="ghost" onClick={() => navigate('/')} className="gap-2">
