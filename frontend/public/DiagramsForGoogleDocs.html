@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equalyze Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding: 40px;
+            background-color: #f8fafc;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            margin-bottom: 40px;
+        }
+        h2 {
+            color: #0f172a;
+            margin-bottom: 8px;
+        }
+        p.instructions {
+            color: #64748b;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .diagram-wrapper {
+            display: flex;
+            justify-content: center;
+            background-color: white;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>1. Workflow Process Diagram</h2>
+        <p class="instructions">Right-click the diagram below and select <strong>"Copy Image"</strong> or take a screenshot to paste into Google Docs.</p>
+        <div class="diagram-wrapper">
+            <div class="mermaid">
+graph TD
+    classDef trigger fill:#e2e8f0,stroke:#64748b,stroke-width:2px,color:#0f172a
+    classDef process fill:#f8fafc,stroke:#cbd5e1,stroke-width:2px,color:#0f172a
+    classDef decision fill:#eff6ff,stroke:#3b82f6,stroke-width:2px,color:#1d4ed8
+    classDef storage fill:#f0fdf4,stroke:#22c55e,stroke-width:2px,color:#15803d
+
+    A(["Trigger: Data Audit / CI/CD Pipeline"]) ::: trigger
+    B["Security Middleware Validation"] ::: process
+    C["Pre-Audit Check"] ::: process
+    D["Bias, Fairness & Explainability Testing"] ::: process
+    E{"Compliance Decision"} ::: decision
+    F["Approved for Production"] ::: process
+    G["Halted / Suspended"] ::: process
+    H[("Immutable Audit Ledger")] ::: storage
+
+    A --> B
+    B --> C
+    C --> D
+    D --> E
+    E -->|"Meets Thresholds"| F
+    E -->|"Fails Thresholds"| G
+    
+    F --> H
+    G --> H
+    
+    %% Add some styling to links
+    linkStyle 0,1,2,3 stroke:#94a3b8,stroke-width:2px;
+    linkStyle 4 stroke:#22c55e,stroke-width:2px,color:#15803d;
+    linkStyle 5 stroke:#ef4444,stroke-width:2px,color:#b91c1c;
+    linkStyle 6,7 stroke:#94a3b8,stroke-width:2px,stroke-dasharray: 5 5;
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>2. Use Case Flow Diagram</h2>
+        <p class="instructions">Right-click the diagram below and select <strong>"Copy Image"</strong> or take a screenshot to paste into Google Docs.</p>
+        <div class="diagram-wrapper">
+            <div class="mermaid">
+graph LR
+    classDef actor fill:#fef08a,stroke:#ca8a04,stroke-width:2px,color:#854d0e
+    classDef platform fill:#e0e7ff,stroke:#4f46e5,stroke-width:2px,color:#312e81
+    classDef usecase fill:#ffffff,stroke:#cbd5e1,stroke-width:2px
+
+    %% Actors
+    DE(("Data Engineer")) ::: actor
+    DS(("Data Scientist")) ::: actor
+    CO(("Compliance Officer")) ::: actor
+    Sys[["Equalyze Platform"]] ::: platform
+
+    %% Use Cases
+    subgraph GovernanceLifecycle ["Governance Lifecycle"]
+        UC1(["Uploads Data / Submits Model"]) ::: usecase
+        UC2(["Runs Audits"]) ::: usecase
+        UC3(["Executes Fairness Checks"]) ::: usecase
+        UC4(["Approves / Halts Models"]) ::: usecase
+    end
+
+    %% Relationships
+    DE -->|"Initiates"| UC1
+    DS -->|"Requests"| UC2
+    Sys -->|"Automates"| UC3
+    CO -->|"Governs"| UC4
+
+    UC1 -.->|"Triggers"| UC3
+    UC2 -.->|"Leverages"| Sys
+    UC3 -.->|"Informs"| UC4
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'default' });
+    </script>
+</body>
+</html>
