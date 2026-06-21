@@ -28,13 +28,13 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
       ${sidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full md:translate-x-0 md:w-20'}
     `}>
       <div className="h-16 flex items-center justify-between px-4 border-b border-primary/20">
-        {(sidebarOpen || window.innerWidth < 768) ? (
+        {sidebarOpen ? (
           <div className="flex items-center gap-2 overflow-hidden whitespace-nowrap animate-in fade-in flex-1">
             <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 shrink-0 rounded-sm" />
             <span className="font-bold tracking-tight">Equalyze AI</span>
           </div>
         ) : (
-          <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 mx-auto shrink-0 rounded-sm" />
+          <img src="/apple-touch-icon.png" alt="Equalyze Logo" className="w-6 h-6 mx-auto shrink-0 rounded-sm hidden md:block" />
         )}
         {/* Mobile Close Button */}
         <button 
@@ -53,7 +53,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           title={t('nav.dashboard')}
         >
           <LayoutDashboard className={`w-5 h-5 shrink-0 ${location.pathname === '/dashboard' ? 'fill-current' : ''}`} />
-          {(sidebarOpen || window.innerWidth < 768) && <span className="font-medium whitespace-nowrap">{t('nav.dashboard')}</span>}
+          {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.dashboard')}</span>}
         </Link>
         
         {user.role === 'ministry' && (
@@ -64,7 +64,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
             title={t('nav.auditLog')}
           >
             <FileText className={`w-5 h-5 shrink-0 ${location.pathname === '/audit' ? 'fill-current' : ''}`} />
-            {(sidebarOpen || window.innerWidth < 768) && <span className="font-medium whitespace-nowrap">{t('nav.auditLog')}</span>}
+            {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.auditLog')}</span>}
           </Link>
         )}
       </nav>
@@ -74,7 +74,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <div className="w-8 h-8 rounded-full bg-primary-foreground/20 flex items-center justify-center font-bold shrink-0">
             {user.username.charAt(0).toUpperCase()}
           </div>
-          {(sidebarOpen || window.innerWidth < 768) && (
+          {sidebarOpen && (
             <div className="overflow-hidden">
               <p className="text-sm font-medium truncate">{user.username}</p>
               <p className="text-xs opacity-80 truncate capitalize">{user.role}</p>
@@ -87,7 +87,7 @@ export default function Sidebar({ sidebarOpen, setSidebarOpen }) {
           title={t('nav.logout')}
         >
           <LogOut className="w-5 h-5 shrink-0" />
-          {(sidebarOpen || window.innerWidth < 768) && <span className="font-medium whitespace-nowrap">{t('nav.logout')}</span>}
+          {sidebarOpen && <span className="font-medium whitespace-nowrap">{t('nav.logout')}</span>}
         </button>
       </div>
     </aside>

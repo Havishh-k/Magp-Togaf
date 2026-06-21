@@ -68,7 +68,11 @@ export default function Login() {
                 type="button" 
                 variant="outline" 
                 className="w-full text-xs bg-slate-50 dark:bg-slate-900 border-primary/20 hover:bg-primary/10" 
-                onClick={() => performLogin('admin', 'password123')} 
+                onClick={() => {
+                  setUsername('admin');
+                  setPassword('password123');
+                  performLogin('admin', 'password123');
+                }} 
                 disabled={loading}
               >
                 Demo: Ministry
@@ -77,7 +81,11 @@ export default function Login() {
                 type="button" 
                 variant="outline" 
                 className="w-full text-xs bg-slate-50 dark:bg-slate-900 border-primary/20 hover:bg-primary/10" 
-                onClick={() => performLogin('vendor', 'password123')} 
+                onClick={() => {
+                  setUsername('vendor');
+                  setPassword('password123');
+                  performLogin('vendor', 'password123');
+                }} 
                 disabled={loading}
               >
                 Demo: Vendor
